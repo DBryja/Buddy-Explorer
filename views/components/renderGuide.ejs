@@ -1,0 +1,12 @@
+<div class="uResult">
+  <p class="uResult__name">
+    <span class="name__nick"><%= guide.nickname %></span>
+    <span class="name__fullname"><%= guide.fullname %></span>
+  </p>
+  <%- include('../components/profilePicture', {profile_pic: guide.profile_pic}) %>
+  <p class="uResult__regs"><% guide.regs.forEach(item =>{ %> <span class="regs__reg"> <%= item %></span> <% }) %></p>
+  <p class="uResult__cities">
+    <% guide.cities.forEach(item =>{ %> <span class="cities__city"> <%= item %></span> <% }) %>
+  </p>
+  <p class="uResult__desc"><%= guide.desc %></p>
+</div>

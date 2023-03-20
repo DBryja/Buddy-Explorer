@@ -1,0 +1,184 @@
+<style>
+  .inline {
+    display: inline;
+  }
+  .change {
+    display: inline;
+    cursor: pointer;
+    color: rgb(3, 3, 83);
+  }
+  .current {
+    color: white;
+  }
+  .popup {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 60vh;
+    aspect-ratio: 1;
+    background-color: #574040;
+    z-index: 100;
+  }
+  .wrap.active::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+  }
+  .hidden {
+    display: none;
+  }
+  .active {
+    display: block;
+  }
+</style>
+<div class="popup hidden" id="unblurred">
+  <div class="inside__form">.</div>
+  <button class="popup__btn">wyjdz</button>
+</div>
+<div class="uResult">
+  <div class="uImage">
+    <%- include('../components/profilePicture', {profile_pic: guide.profile_pic}) %>
+    <button class="change__ppic">Zmień zdjęcie</button>
+  </div>
+
+  <div class="name__nickname inline">
+    <span>Nazwa użytkownika</span>
+    <span class="current" data-key="nickname"><%= guide.nickname %></span>
+    <span class="change__nickname change" data-key="nickname">Zmień</span>
+  </div>
+
+  <br />
+  <div class="name__fullname inline">
+    <span>Imie i Nazwisko</span>
+    <span class="current" data-key="fullname"
+      ><% if(guide.fullname) { %><%=guide.fullname%><% }else{ %> <i>Imie Nazwisko</i><% } %></span
+    >
+    <span class="change__fullname change" data-key="fullname">Zmień</span>
+  </div>
+
+  <br />
+  <!-- <p class="uResult__regs inline"><% guide.regs.forEach(item =>{ %> <span class="regs__reg"> <%= item %></span> <% }) %></p>
+  <p class="uResult__cities">
+    <% guide.cities.forEach(item =>{ %> <span class="cities__city"> <%= item %></span> <% }) %>
+  </p> -->
+
+  <div class="uResult__desc inline">
+    <span>Opis</span>
+    <span class="current" data-key="desc"><% if(guide.desc) { %><%=guide.desc%><% }else{ %><i>Opis</i><% } %></span>
+    <span class="change__desc change" data-key="desc">Zmień</span>
+  </div>
+  <br />
+
+  <button class="change__password popup__btn" onclick="popUpForm()">Zmień hasło</button>
+  <button class="change__county popup__btn">Dodaj/Usuń powiat</button>
+  <button class="change__city popup__btn">Dodaj/Usuń miejscowość</button>
+</div>
+
+<script>
+  // console.log(JSON.parse(test));
+  let guide = JSON.parse(`<%- JSON.stringify(guide) %>`);
+  delete guide.profile_pic;
+  console.log(guide);
+
+  const togglePopup = () => {
+    document.querySelector(".popup").classList.toggle("hidden");
+    document.querySelector(".wrap").classList.toggle("active");
+  };
+
+  const renderForm = (type, guide) => {
+    let content = "";
+    console.log(type, guide);
+    switch (type) {
+      case "nickname":
+        content = `
+        <span>Nazwa Użytkownika:<span><input type="text" name="nickname" value="${guide.nickname}"</input>
+        `;
+        break;
+      case "fullname":
+        content = `
+        <span>Nazwa Użytkownika:<span><input type="text" name="nickname" value="${guide.fullname}"</input>
+          `;
+        break;
+      case "desc":
+        content = `
+        <span>Nazwa Użytkownika:<span><textarea name="nickname" value="${guide.fullname}"</textarea>
+        `;
+        break;
+    }
+    return content;
+  };
+
+  const popUpForm = (type) => {
+    const inside = document.querySelector(".inside__form");
+    // inside.innerHTML = `ss`;
+
+    let form = renderForm(type, guide);
+    // switch (obj.name) {
+    //   case "nickname":
+    //   case "fullname":
+    //     form = `<form method="POST">
+    //   <span>${obj.label}</span>
+    //   <input type="text" name="${obj.name}" value='${obj.value}'>
+    //   <input type="submit" value="zatwierdź"></form>`;
+    //     break;
+    //   case "desc":
+    //     form = `<form method="POST">
+    //   <span>${obj.label}</span>
+    //   <textarea height="200px" name="${obj.name}" value='${obj.value}'></textarea>
+    //   <input type="submit" value="zatwierdź"></form>`;
+    //     break;
+
+    //   case "password":
+    //     form = `
+
+    //     `;
+    // }
+    inside.innerHTML = form;
+  };
+
+  const formChange = document.querySelectorAll(".change");
+  formChange.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      const parent = e.target.parentElement;
+      const datakey = e.target.dataset.key;
+      // console.log(document.querySelector(`.current[data-key="${datakey}"]`));
+      const value = document.querySelector(`.current[data-key="${datakey}"]`).textContent;
+      // console.log(parent, datakey, value);
+      // const obj = {
+      //   name: datakey,
+      //   value: value,
+      //   label: parent.children[0].textContent,
+      // };
+      popUpForm(datakey);
+      togglePopup();
+    });
+  });
+
+  document.querySelectorAll(".popup__btn").forEach((item) => {
+    item.addEventListener("click", () => {
+      togglePopup();
+    });
+  });
+  document.body.addEventListener("click", (e) => {
+    if (e.target === document.querySelector(".wrap.active")) {
+      togglePopup();
+    }
+  });
+
+  // document.querySelector(".submit_btn").addEventListener("click", (e) => {
+  //   e.preventDefault();
+  // });
+
+  // document.querySelector(".change__password").addEventListener("click", () => {
+  //   let obj = {
+  //     name: password,
+  //     label: "Aktualne hasło",
+  //   };
+  //   popUpForm(obj);
+  // });
+</script>

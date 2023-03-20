@@ -13,42 +13,25 @@ router.get("/guide/signup", async (req, res) => {
   res.render("user/signupTemplate.ejs", { libs: ["tools"] });
 });
 
-router.get("/get_counties", async function (req, res) {
-  const db = dbService.getDbServiceInstance();
-  const string = req.query.counties;
-  if (string.length > 1) {
-    const result = await db.getCounties(string);
-    res.send(result);
-  }
-});
-router.get("/get_cities", async function (req, res) {
-  const db = dbService.getDbServiceInstance();
-  const string = req.query.cities;
-  if (string.length > 1) {
-    const result = await db.getCities(string);
-    res.send(result);
-  }
-});
-
 router.post("/guide/signup", upload.single("profile_pic"), guideValidation, handleErrors, async (req, res) => {
   if (validationResult(req).isEmpty()) {
     const db = dbService.getDbServiceInstance();
     const { email, password, nickname, county, city, fullname } = req.body;
     let profile_pic;
-    if (req.file.fieldname) {
+    if (req.file) {
       profile_pic = req.file.buffer.toString("base64");
     } else {
       profile_pic = false;
     }
     await db.createGuide(email, password, nickname, county, city, profile_pic, fullname);
-    // res.render("user/searchTemplate.ejs", { guides: [], error: false, libs: ["tools"] });
-    res.redirect("/search");
+    // req.session.guideId = await db.getGuideByEmail(email);
+    res.redirect("/guide/profile");
   }
 });
 
 router.get("/testdelete", async (req, res) => {
   const db = dbService.getDbServiceInstance();
-  await db.deleteGuide("test123321@test.com");
+  await db.deleteGuide("test@test.com");
   res.sendStatus(200);
 });
 

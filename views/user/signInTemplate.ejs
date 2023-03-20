@@ -18,6 +18,8 @@
     return(errors[searchIndex].msg); } catch(err){ return ""; } } %>
   </head>
   <body>
+    <%- include("../components/header"); %><!-- -->
+
     <h1>GUIDE SIGN IN</h1>
     <form method="POST">
       <p class="error"><%= getError("invalid")%></p>

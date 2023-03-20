@@ -1,0 +1,9 @@
+<% if(profile_pic){%>
+<div class="uImage">
+  <img src="data:image/png;base64, <%= profile_pic %>" width="200" />
+</div>
+<% }else{ %>
+<div class="uImage">
+  <img src="/img/classic_pp.jpg" width="200" />
+</div>
+<% }%>

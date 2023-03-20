@@ -81,6 +81,7 @@ export class dbService {
   // get guide by email
   async getGuideByEmail(email) {
     let sql = `SELECT guide_id FROM guides WHERE email = '${email}'`;
+    // console.log(await this.queryHandling(sql));
     return (await this.queryHandling(sql))[0];
   }
   async getGuideLoginData(email) {
@@ -112,13 +113,12 @@ export class dbService {
     });
     // insert into profile_pic
     let sql6 = `INSERT INTO guides_ppic (guide_id) VALUES ("${id}")`;
-    console.log(profile_pic);
     if (profile_pic) sql6 = `INSERT INTO guides_ppic (guide_id, profile_pic) VALUES ("${id}", "${profile_pic}")`;
     this.queryHandling(sql6);
   }
   // DELETE GUIDE
   async deleteGuide(email) {
-    const id = (await this.getGuideByEmail(email)).guide_id;
+    const id = await this.getGuideByEmail(email);
     let sql = `
     DELETE guides_cities, guides_regions, guides_data, guides_ppic, guides_languages FROM guides 
     LEFT JOIN guides_cities ON (guides_cities.guide_id = guides.guide_id) AND guides_cities.guide_id = "${id}"
