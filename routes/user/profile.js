@@ -1,7 +1,8 @@
 import express from "express";
 
 import { dbService } from "../../repositories/dbservice.js";
-import { handleErrors } from "../../tools/middlewares.js";
+import { handleErrorsProfile } from "../../tools/middlewares.js";
+import { requireNickname, updateValidation } from "../../tools/validators.js";
 
 const router = express.Router();
 
@@ -22,12 +23,12 @@ router.get("/guide/signout", async (req, res) => {
   res.redirect("/guide/signin");
 });
 
-router.post("/guide/profile", handleErrors, async (req, res) => {
+router.post("/guide/profile", updateValidation, handleErrorsProfile, async (req, res) => {
   const db = dbService.getDbServiceInstance();
   const { nickname, fullname, desc } = req.body;
-  // if (nickname) console.log(nickname);
-  // if (fullname) console.log(fullname);
-  // if (desc) console.log(desc);
+  if (nickname) console.log(nickname);
+  if (fullname) console.log(fullname);
+  if (desc) console.log(desc);
 
   res.redirect("back");
 });
