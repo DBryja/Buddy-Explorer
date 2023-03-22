@@ -18,6 +18,17 @@ const validators = {
     .trim()
     .isLength({ min: 5, max: 16 })
     .withMessage("Must be between 5 and 16 characters"),
+  requireFullname: check("fullname")
+    .trim()
+    .isLength({ min: 3, max: 64 })
+    .withMessage("Musi zawierać conajmniej 3 znaki, maksymalnie 64")
+    .optional({ checkFalsy: true }),
+  requireDesc: check("desc")
+    .trim()
+    .isLength({ max: 256 })
+    .withMessage("Musi zawierać maksymalnie 256 znaków")
+    .optional({ checkFalsy: true }),
+
   requirePrice: check("price").trim().toFloat().isFloat({ min: 1 }).withMessage("Must be a number greater or equal 1"),
   requireEmail: body("email")
     .trim()
@@ -102,6 +113,12 @@ export const guideValidation = [
   validators.requireCity,
 ];
 
+export const updateValidation = [
+  validators.requireNickname.optional({ checkFalsy: true }),
+  validators.requireFullname,
+  validators.requireDesc,
+];
+
 export const {
   requireConfirm,
   requireEmail,
@@ -110,4 +127,5 @@ export const {
   requirePrice,
   requireTitle,
   requireValidUsersPasswords,
+  requireNickname,
 } = validators;

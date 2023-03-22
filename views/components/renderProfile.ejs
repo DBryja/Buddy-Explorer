@@ -8,7 +8,7 @@
     color: rgb(3, 3, 83);
   }
   .current {
-    color: white;
+    color: rgb(255, 26, 26);
   }
   .popup {
     position: absolute;
@@ -46,44 +46,41 @@
     <button class="change__ppic">Zmień zdjęcie</button>
   </div>
 
-  <div class="name__nickname inline">
-    <span>Nazwa użytkownika</span>
-    <span class="current" data-key="nickname"><%= guide.nickname %></span>
-    <span class="change__nickname change" data-key="nickname">Zmień</span>
-  </div>
+  <form method="POST">
+    <div class="name__nickname inline">
+      <span>Nazwa użytkownika</span>
+      <input type="text" class="current" name="nickname" placeholder=<%=guide.nickname%>></input>
+    </div>
 
-  <br />
-  <div class="name__fullname inline">
-    <span>Imie i Nazwisko</span>
-    <span class="current" data-key="fullname"
-      ><% if(guide.fullname) { %><%=guide.fullname%><% }else{ %> <i>Imie Nazwisko</i><% } %></span
-    >
-    <span class="change__fullname change" data-key="fullname">Zmień</span>
-  </div>
+    <br />
+    <div class="name__fullname inline">
+      <span>Imie i Nazwisko</span>
+      <input type="text" class="current" name="fullname" placeholder="<%if(guide.desc){guide.desc}else{%>Imie i Nazwisko<%}%>"></input>
+    </div>
+    <br />
 
-  <br />
-  <!-- <p class="uResult__regs inline"><% guide.regs.forEach(item =>{ %> <span class="regs__reg"> <%= item %></span> <% }) %></p>
-  <p class="uResult__cities">
-    <% guide.cities.forEach(item =>{ %> <span class="cities__city"> <%= item %></span> <% }) %>
-  </p> -->
+    <div class="uResult__desc inline">
+      <span>Opis</span>
+      <textarea class="current" name="desc" placeholder="<%if(guide.desc){guide.desc}else{%>Opis<%}%>"></textarea>
+    </div>
+    <br />
+    <input type="submit" value="zatwierdź">
+  </form>
 
-  <div class="uResult__desc inline">
-    <span>Opis</span>
-    <span class="current" data-key="desc"><% if(guide.desc) { %><%=guide.desc%><% }else{ %><i>Opis</i><% } %></span>
-    <span class="change__desc change" data-key="desc">Zmień</span>
-  </div>
-  <br />
-
-  <button class="change__password popup__btn" onclick="popUpForm()">Zmień hasło</button>
+  <button class="change__password popup__btn">Zmień hasło</button>
   <button class="change__county popup__btn">Dodaj/Usuń powiat</button>
   <button class="change__city popup__btn">Dodaj/Usuń miejscowość</button>
 </div>
+
+    <!-- <p class="uResult__regs inline"><% guide.regs.forEach(item =>{ %> <span class="regs__reg"> <%= item %></span> <% }) %></p>
+  <p class="uResult__cities">
+    <% guide.cities.forEach(item =>{ %> <span class="cities__city"> <%= item %></span> <% }) %>
+  </p> -->
 
 <script>
   // console.log(JSON.parse(test));
   let guide = JSON.parse(`<%- JSON.stringify(guide) %>`);
   delete guide.profile_pic;
-  console.log(guide);
 
   const togglePopup = () => {
     document.querySelector(".popup").classList.toggle("hidden");
@@ -117,7 +114,10 @@
     const inside = document.querySelector(".inside__form");
     // inside.innerHTML = `ss`;
 
-    let form = renderForm(type, guide);
+    let form = `<form method="GET"> ${renderForm(
+      type,
+      guide
+    )} <input type="submit" class="submit" value="Zmień"></form>`;
     // switch (obj.name) {
     //   case "nickname":
     //   case "fullname":
