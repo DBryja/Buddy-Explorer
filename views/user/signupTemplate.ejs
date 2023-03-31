@@ -34,25 +34,34 @@
       <p class="error"><%= getError("passwordConfirmation")%></p>
       <input type="file" name="profile_pic" accept=".jpg, .jpeg, .png" required="false" />
       <div id="counties_Searchbars">
-        <p class="error"><%= getError("county")%></p>
+        <p class="error sb_start"><%= getError("county")%></p>
         <div class="autocomplete_box">
-          <input type="text" class="county_autocomplete county" placeholder="county" name="county" autocomplete="off" />
+          <input
+            type="text"
+            value="opolski"
+            class="county_autocomplete county"
+            placeholder="county"
+            name="county"
+            autocomplete="off"
+          />
+          <button class="item_delete prevent">Usuń</button>
           <div class="counties_container"></div>
         </div>
       </div>
       <div id="cities_Searchbars">
-        <p class="error"><%= getError("city")%></p>
+        <p class="error sb_start"><%= getError("city")%></p>
         <div class="autocomplete_box">
           <input type="text" class="city_autocomplete city" placeholder="city" name="city" autocomplete="off" />
+          <button class="item_delete prevent">Usuń</button>
           <div class="cities_container"></div>
         </div>
       </div>
       <button>zarejestruj</button>
     </form>
     <button class="county_add">dodaj powiat</button>
-    <button class="county_remove">odejmij powiat</button>
+    <!-- <button class="county_remove">odejmij powiat</button> -->
     <button class="city_add">dodaj miasto</button>
-    <button class="city_remove">odejmij miasto</button>
+    <!-- <button class="city_remove">odejmij miasto</button> -->
 
     <!-- SCRIPTS -->
     <% if (typeof libs !== 'undefined') { %> <% for (let lib of libs) { %>
@@ -60,57 +69,20 @@
     <% } %> <% } %>
     <script>
       //county Searchbars service
+      removeItemListener();
+      document
+        .querySelectorAll(".prevent")
+        .forEach((item) => item.addEventListener("click", (e) => e.preventDefault()));
+      addCountyListener();
+      // removeCountyListener();
+      addCityListener();
+      // removeCityListener();
+
       let countiesSearchbars = document.querySelectorAll(".county_autocomplete");
       let citiesSearchbars = document.querySelectorAll(".city_autocomplete");
 
       SearchbarsForeach(countiesSearchbars, "counties");
       SearchbarsForeach(citiesSearchbars, "cities");
-
-      // input fields amount
-      function removeLast(cont) {
-        const container = document.querySelector(cont);
-        if (container.childElementCount > 1) {
-          container.removeChild(container.lastChild);
-        }
-      }
-      // add another county
-      document.querySelector(".county_add").addEventListener("click", (e) => {
-        e.preventDefault();
-        const lastItem = document.querySelector("#counties_Searchbars").lastElementChild;
-        if (lastItem.firstElementChild.value) {
-          const acBox = document.createElement("div");
-          acBox.classList.add("autocomplete_box", "county_box");
-          acBox.innerHTML = `
-        <input type="text" class="county_autocomplete county" placeholder="county" name="county" autocomplete="off"/>
-        <div class="counties_container"></div>
-        `;
-          document.querySelector("#counties_Searchbars").appendChild(acBox);
-          countiesSearchbars = document.querySelectorAll(".county_autocomplete");
-          SearchbarsForeach(countiesSearchbars, "counties");
-        }
-      });
-      document.querySelector(".county_remove").addEventListener("click", () => {
-        removeLast("#counties_Searchbars");
-      });
-      // add another city
-      document.querySelector(".city_add").addEventListener("click", (e) => {
-        e.preventDefault();
-        const lastItem = document.querySelector("#cities_Searchbars").lastElementChild;
-        if (lastItem.firstElementChild.value) {
-          const acBox = document.createElement("div");
-          acBox.classList.add("autocomplete_box", "city_box");
-          acBox.innerHTML = `
-        <input type="text" class="city_autocomplete city" placeholder="city" name="city" autocomplete="off"/>
-        <div class="cities_container"></div>
-        `;
-          document.querySelector("#cities_Searchbars").appendChild(acBox);
-          citiesSearchbars = document.querySelectorAll(".city_autocomplete");
-          SearchbarsForeach(citiesSearchbars, "cities");
-        }
-      });
-      document.querySelector(".city_remove").addEventListener("click", () => {
-        removeLast("#cities_Searchbars");
-      });
     </script>
   </body>
 </html>

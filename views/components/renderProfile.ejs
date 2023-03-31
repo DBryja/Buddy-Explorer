@@ -1,3 +1,7 @@
+<% if (typeof libs !== 'undefined') { %> <% for (let lib of libs) { %>
+<script src="/libs/<%= lib %>.js" type="text/javascript"></script>
+<% } } %>
+
 <style>
   .inline {
     display: inline;
@@ -8,7 +12,7 @@
     color: rgb(3, 3, 83);
   }
   .current {
-    color: rgb(255, 26, 26);
+    color: white;
   }
   .popup {
     position: absolute;
@@ -36,49 +40,7 @@
     display: block;
   }
 </style>
-<div class="popup hidden" id="unblurred">
-  <div class="inside__form">.</div>
-  <button class="popup__btn">wyjdz</button>
-</div>
-<div class="uResult">
-  <div class="uImage">
-    <%- include('../components/profilePicture', {profile_pic: guide.profile_pic}) %>
-    <button class="change__ppic">Zmień zdjęcie</button>
-  </div>
-
-  <form method="POST">
-    <div class="name__nickname inline">
-      <span>Nazwa użytkownika</span>
-      <input type="text" class="current" name="nickname" placeholder=<%=guide.nickname%>></input>
-    </div>
-
-    <br />
-    <div class="name__fullname inline">
-      <span>Imie i Nazwisko</span>
-      <input type="text" class="current" name="fullname" placeholder="<%if(guide.desc){guide.desc}else{%>Imie i Nazwisko<%}%>"></input>
-    </div>
-    <br />
-
-    <div class="uResult__desc inline">
-      <span>Opis</span>
-      <textarea class="current" name="desc" placeholder="<%if(guide.desc){guide.desc}else{%>Opis<%}%>"></textarea>
-    </div>
-    <br />
-    <input type="submit" value="zatwierdź">
-  </form>
-
-  <button class="change__password popup__btn">Zmień hasło</button>
-  <button class="change__county popup__btn">Dodaj/Usuń powiat</button>
-  <button class="change__city popup__btn">Dodaj/Usuń miejscowość</button>
-</div>
-
-    <!-- <p class="uResult__regs inline"><% guide.regs.forEach(item =>{ %> <span class="regs__reg"> <%= item %></span> <% }) %></p>
-  <p class="uResult__cities">
-    <% guide.cities.forEach(item =>{ %> <span class="cities__city"> <%= item %></span> <% }) %>
-  </p> -->
-
 <script>
-  // console.log(JSON.parse(test));
   let guide = JSON.parse(`<%- JSON.stringify(guide) %>`);
   delete guide.profile_pic;
 
@@ -89,22 +51,63 @@
 
   const renderForm = (type, guide) => {
     let content = "";
-    console.log(type, guide);
     switch (type) {
       case "nickname":
         content = `
-        <span>Nazwa Użytkownika:<span><input type="text" name="nickname" value="${guide.nickname}"</input>
+        <span>Nazwa Użytkownika:<span><input type="text" name="nickname" value="${guide.nickname}"/>
         `;
         break;
       case "fullname":
         content = `
-        <span>Nazwa Użytkownika:<span><input type="text" name="nickname" value="${guide.fullname}"</input>
+        <span>Imię i Nazwisko:<span><input type="text" name="fullname" value="${guide.fullname}"/>
           `;
         break;
       case "desc":
         content = `
-        <span>Nazwa Użytkownika:<span><textarea name="nickname" value="${guide.fullname}"</textarea>
+        <span>Opis:<span><textarea name="desc">${guide.desc.replaceAll("<br />", "\n")}</textarea>
         `;
+        break;
+      case "password":
+        content = `
+        <span>Aktualne hasło:<span><input type="password" name="pswd_current"/>
+        <span>Nowe hasło:<span><input type="password" name="password" id="password" />
+        <span>Potwierdź hasło:<span><input type="password" name="passwordConfirmation" id="passwordConfirmation"/>
+        `;
+        break;
+      case "county":
+        content = `
+        <div id="counties_Searchbars">
+        <span></span>
+        <% guide.regs.forEach((item) =>{ %>
+            <div class="autocomplete_box">
+              <input type="text" class="county_autocomplete county" placeholder="powiat" name="county" autocomplete="off" value="<%=item%>"></span>
+              <button class="item_delete prevent">Usuń</button>
+              <div class="cities_container"></div>
+            </div>
+        <% }) %>
+        </div>
+        <button class="county_add prevent">dodaj powiat</button>
+        `;
+        break;
+      case "city":
+        content = `
+        <div id="cities_Searchbars">
+        <span></span>
+          <% guide.cities.forEach((item) =>{ %>
+            <div class="autocomplete_box">
+              <input type="text" class="city_autocomplete city" placeholder="miasto" name="city" autocomplete="off" value="<%=item%>"">
+              <button class="item_delete prevent">Usuń</button>
+              <div class="counties_container"></div>
+            </div>
+        <% }) %>
+      </div>
+      <button class="city_add prevent">dodaj miasto</button>
+        `;
+        break;
+      case "profile_pic":
+        content = `
+        <span>Zdjęcie profilowe:</span><input type="file" name="profile_pic" accept=".jpg, .jpeg, .png" required="false" />
+          `;
         break;
     }
     return content;
@@ -112,48 +115,36 @@
 
   const popUpForm = (type) => {
     const inside = document.querySelector(".inside__form");
-    // inside.innerHTML = `ss`;
-
-    let form = `<form method="GET"> ${renderForm(
-      type,
-      guide
-    )} <input type="submit" class="submit" value="Zmień"></form>`;
-    // switch (obj.name) {
-    //   case "nickname":
-    //   case "fullname":
-    //     form = `<form method="POST">
-    //   <span>${obj.label}</span>
-    //   <input type="text" name="${obj.name}" value='${obj.value}'>
-    //   <input type="submit" value="zatwierdź"></form>`;
-    //     break;
-    //   case "desc":
-    //     form = `<form method="POST">
-    //   <span>${obj.label}</span>
-    //   <textarea height="200px" name="${obj.name}" value='${obj.value}'></textarea>
-    //   <input type="submit" value="zatwierdź"></form>`;
-    //     break;
-
-    //   case "password":
-    //     form = `
-
-    //     `;
-    // }
+    // let enctype = "application/x-www-form-urlencoded";
+    // if (type === "profile_pic") enctype = """
+    let form = `<form method="POST" enctype="multipart/form-data" action="/guide/profile/${type}">
+    ${renderForm(type, guide)}
+    <input type="hidden" name="guide_id" value="${guide.guideId}">
+    <input type="submit" class="submit" value="Zatwierdź zmiany">
+    </form>`;
     inside.innerHTML = form;
+
+    if (type === "city" || type === "county") {
+      document.querySelectorAll(".prevent").forEach((item) => {
+        item.addEventListener("click", (e) => e.preventDefault());
+      });
+      if (type === "city") {
+        addCityListener();
+        let citiesSearchbars = document.querySelectorAll(".city_autocomplete");
+        SearchbarsForeach(citiesSearchbars, "cities");
+      } else {
+        addCountyListener();
+        let countiesSearchbars = document.querySelectorAll(".county_autocomplete");
+        SearchbarsForeach(countiesSearchbars, "counties");
+      }
+      removeItemListener();
+    }
   };
 
   const formChange = document.querySelectorAll(".change");
   formChange.forEach((item) => {
     item.addEventListener("click", (e) => {
-      const parent = e.target.parentElement;
       const datakey = e.target.dataset.key;
-      // console.log(document.querySelector(`.current[data-key="${datakey}"]`));
-      const value = document.querySelector(`.current[data-key="${datakey}"]`).textContent;
-      // console.log(parent, datakey, value);
-      // const obj = {
-      //   name: datakey,
-      //   value: value,
-      //   label: parent.children[0].textContent,
-      // };
       popUpForm(datakey);
       togglePopup();
     });
@@ -169,16 +160,7 @@
       togglePopup();
     }
   });
-
-  // document.querySelector(".submit_btn").addEventListener("click", (e) => {
-  //   e.preventDefault();
-  // });
-
-  // document.querySelector(".change__password").addEventListener("click", () => {
-  //   let obj = {
-  //     name: password,
-  //     label: "Aktualne hasło",
-  //   };
-  //   popUpForm(obj);
-  // });
+  removeItemListener();
 </script>
+
+<!-- jakis blad przy usuwaniu -->

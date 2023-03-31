@@ -13,21 +13,30 @@ export function validateRequestSchema(res, req, next) {
   next();
 }
 
+const checkTag = (item) => {
+  if (item.includes("<") || item.includes(">")) {
+    throw new Error("Oj, ten znacznik(<, >) może być groźny :^)");
+  } else return true;
+};
+
 const validators = {
   requireNickname: check("nickname")
     .trim()
     .isLength({ min: 5, max: 16 })
-    .withMessage("Must be between 5 and 16 characters"),
+    .withMessage("Must be between 5 and 16 characters")
+    .custom((item) => checkTag(item)),
   requireFullname: check("fullname")
     .trim()
     .isLength({ min: 3, max: 64 })
     .withMessage("Musi zawierać conajmniej 3 znaki, maksymalnie 64")
-    .optional({ checkFalsy: true }),
+    .optional({ checkFalsy: true })
+    .custom((item) => checkTag(item)),
   requireDesc: check("desc")
     .trim()
     .isLength({ max: 256 })
     .withMessage("Musi zawierać maksymalnie 256 znaków")
-    .optional({ checkFalsy: true }),
+    .optional({ checkFalsy: true })
+    .custom((item) => checkTag(item)),
 
   requirePrice: check("price").trim().toFloat().isFloat({ min: 1 }).withMessage("Must be a number greater or equal 1"),
   requireEmail: body("email")
@@ -43,22 +52,23 @@ const validators = {
         return true;
       }
     })
-    .withMessage("This email is in use"),
+    .withMessage("This email is in use")
+    .custom((item) => checkTag(item)),
 
   requirePassword: check("password")
     .trim()
     .isLength({ min: 8, max: 32 })
-    .withMessage("Must be between 8 and 32 characters"),
+    .withMessage("Must be between 8 and 32 characters")
+    .custom((item) => checkTag(item)),
 
   requireConfirm: check("passwordConfirmation")
     .trim()
     .custom((passwordConfirmation, { req }) => {
       if (passwordConfirmation !== req.body.password) {
         throw new Error("Passwords must match");
-      } else {
-        return true;
-      }
-    }),
+      } else return true;
+    })
+    .custom((item) => checkTag(item)),
 
   requireCity: check("city")
     .custom(async (city) => {
@@ -79,7 +89,8 @@ const validators = {
         return true;
       }
     })
-    .withMessage("Must provide a valid city"),
+    .withMessage("Must provide a valid city")
+    .custom((item) => checkTag(item)),
 
   requireCounty: check("county")
     .custom(async (county) => {
@@ -100,7 +111,8 @@ const validators = {
         return true;
       }
     })
-    .withMessage("Must provide a valid county"),
+    .withMessage("Must provide a valid county")
+    .custom((item) => checkTag(item)),
 };
 
 export const guideValidation = [
@@ -115,8 +127,10 @@ export const guideValidation = [
 
 export const updateValidation = [
   validators.requireNickname.optional({ checkFalsy: true }),
-  validators.requireFullname,
-  validators.requireDesc,
+  validators.requireFullname.optional({ checkFalsy: true }),
+  validators.requireDesc.optional({ checkFalsy: true }),
+  validators.requirePassword.optional({ checkFalsy: true }),
+  validators.requireConfirm.optional({ checkFalsy: true }),
 ];
 
 export const {

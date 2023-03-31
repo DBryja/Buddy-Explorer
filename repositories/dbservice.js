@@ -88,6 +88,10 @@ export class dbService {
     let sql = `SELECT * FROM guides WHERE email = '${email}'`;
     return (await this.queryHandling(sql))[0];
   }
+  async getPasswordById(id) {
+    let sql = `SELECT password FROM guides WHERE guide_id = '${id}'`;
+    return (await this.queryHandling(sql))[0].password;
+  }
 
   // GUIDE CREATION
   async createGuide(email, password, nickname, regions, cities, profile_pic, fullname = "") {
@@ -237,16 +241,46 @@ export class dbService {
     await this.multiResultObject(queries["greg"], guide, "regs");
     await this.multiResultObject(queries["gcities"], guide, "cities");
 
+    guide.guideId = id;
     return guide;
   }
 
-  // GUIDE INTERFACE
-  // change name
-  // change email
-  // change password
-  // change desc
-  // change regions
-  // change cities
+  // update data queries
+  // blad przy opisie przez znaki jak enter itp
+  async updateData(newData, type, id) {
+    let sql = `UPDATE guides_data SET guides_data.${type} = '${newData}' WHERE guides_data.guide_id = '${id}'`;
+    this.queryHandling(sql);
+    return;
+  }
+
+  async updatePassword(id, pswd) {
+    const password = this.hashPassword(pswd);
+    let sql = `UPDATE guides SET password = "${password}" WHERE guides.guide_id = '${id}'`;
+    this.queryHandling(sql);
+    return;
+  }
+
+  async updatePlaces(id, type, arr) {
+    let tablename, itemname;
+    if (type === "county") {
+      tablename = "guides_regions";
+      itemname = "region";
+    } else {
+      tablename = "guides_cities";
+      itemname = "city";
+    }
+    let sql1 = `DELETE FROM ${tablename} WHERE guide_id = '${id}'`;
+    this.queryHandling(sql1);
+    arr.forEach((item) => {
+      let sql2 = `INSERT INTO ${tablename} (guide_id, ${itemname}) VALUES ("${id}", "${item}")`;
+      this.queryHandling(sql2);
+    });
+  }
+
+  async updateImage(id, image) {
+    let sql = `UPDATE guides_ppic SET profile_pic = "${image}" WHERE guides_ppic.guide_id = '${id}'`;
+    this.queryHandling(sql);
+  }
 
   // OTHERS
   async getCounties(text) {

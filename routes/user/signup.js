@@ -10,7 +10,11 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.get("/guide/signup", async (req, res) => {
-  res.render("user/signupTemplate.ejs", { libs: ["tools"] });
+  if (req.session.guideId) {
+    res.redirect("/guide/profile");
+  } else {
+    res.render("user/signupTemplate.ejs", { libs: ["tools"] });
+  }
 });
 
 router.post("/guide/signup", upload.single("profile_pic"), guideValidation, handleErrors, async (req, res) => {

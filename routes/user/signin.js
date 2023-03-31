@@ -21,7 +21,7 @@ router.get("/guide/signin", async (req, res) => {
     });
   } else {
     //  first time signing in (clean session)
-    res.render("user/signinTemplate.ejs", { libs: ["tools"], errors: {} });
+    res.render("user/signinTemplate.ejs", { libs: ["tools"], errors: [] });
   }
 });
 
