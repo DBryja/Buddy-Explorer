@@ -1,12 +1,24 @@
 <div class="uResult">
-  <p class="uResult__name">
-    <span class="name__nick"><%= guide.nickname %></span>
-    <span class="name__fullname"><%= guide.fullname %></span>
-  </p>
   <%- include('../components/profilePicture', {profile_pic: guide.profile_pic}) %>
-  <p class="uResult__regs"><% guide.regs.forEach(item =>{ %> <span class="regs__reg"> <%= item %></span> <% }) %></p>
-  <p class="uResult__cities">
-    <% guide.cities.forEach(item =>{ %> <span class="cities__city"> <%= item %></span> <% }) %>
-  </p>
-  <p class="uResult__desc"><%= guide.desc %></p>
+  <div class="uResult__data data">
+    <p class="data__name name">
+      <span class="name__nick"><%= guide.nickname %></span>
+      <% if(guide.fullname) {%><span class="name__fullname"><%= guide.fullname %></span><%}%>
+    </p>
+    <!-- <p class="uResult__regs"><% guide.regs.forEach(item =>{ %> <span class="regs__reg"> <%= item %></span> <% }) %></p> -->
+    <p class="data__cities">
+      <% guide.cities.forEach(item =>{ %> <span class="cities__city"> <%= item %></span> <% }) %>
+    </p>
+  </div>
+  <div class="uResult__contact">
+    <button class="btn btn--email btn--green" data-clipboard-action="copy" data-clipboard-text="<%=guide.email%>">
+      <%=guide.email %>
+    </button>
+  </div>
+  <% if(guide.desc){%>
+  <div class="uResult__desc desc">
+    <span class="fold"> <%= guide.desc %> </span>
+    <button class="btn desc--unfold --mobile btn--green">rozwiń</button>
+  </div>
+  <%}%>
 </div>

@@ -235,6 +235,7 @@ export class dbService {
 
     // image
     guide.profile_pic = (await this.queryHandling(queries["gppic"]))[0].profile_pic;
+    guide.email = (await this.queryHandling(`SELECT email FROM guides WHERE guide_id=${id}`))[0].email;
 
     // languages, regions, cities
     // await this.multiResultObject(queries["glang"], guide, "langs");

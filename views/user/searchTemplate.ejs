@@ -5,51 +5,87 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      body {
-        background-color: #353535;
-      }
-      .uResult {
-        border: 1px solid black;
-      }
-    </style>
   </head>
   <body>
+    <div class="measure-wd"></div>
     <%- include("../components/header"); %><!-- -->
-    <h1>SEARCH</h1>
-    <form method="POST">
-      <div class="autocomplete_box">
-        <input type="text" class="county_autocomplete county" placeholder="county" name="county" autocomplete="off" />
-        <div class="counties_container"></div>
+    <div class="wrapper wrapper--search">
+      <form method="POST" class="search-bar">
+        <div id="cities_Searchbars" class="searchbars">
+          <span></span>
+          <div class="autocomplete_box">
+            <input
+              type="text"
+              class="city_autocomplete city input input--underline"
+              placeholder="miasto"
+              name="city"
+              autocomplete="off"
+            />
+            <span></span>
+          </div>
+          <div class="cities_container ac_container"></div>
+        </div>
+
+        <div id="counties_Searchbars" class="searchbars">
+          <span></span>
+          <div class="autocomplete_box">
+            <input
+              type="text"
+              class="county_autocomplete county input input--underline"
+              placeholder="powiat"
+              name="county"
+              autocomplete="off"
+            />
+            <span></span>
+          </div>
+          <div class="counties_container ac_container"></div>
+        </div>
+
+        <input type="submit" class="btn btn--search btn--green --desktop" value="szukaj" />
+        <input type="submit" class="btn btn--search btn--white --mobile" value="szukaj" />
+
+        <img src="./img/search_trail.svg" alt="trail decoration" class="trail" />
+      </form>
+      <% if(error) { %> <%- include('../components/renderError', {error: error}) %> <% }%>
+      <div class="guides">
+        <% for (let item of guides) { %> <%- include('../components/renderGuide', {guide: item}); %> <% } %>
       </div>
-      <div class="autocomplete_box">
-        <input type="text" class="city_autocomplete city" placeholder="city" name="city" autocomplete="off" />
-        <div class="cities_container"></div>
-      </div>
-      <input type="submit" value="FILTRUJ" />
-    </form>
+    </div>
 
-    <% if(error) { %> <%- include('../components/renderError', {error: error}) %> <% }%>
-
-    <!-- <form method="POST">
-      <input type="text" placeholder="login" class="login" name="login" />
-      <input type="text" placeholder="password" class="password" name="password" />
-      <button>submit</button>
-    </form> -->
-
-    <!-- SCRIPTS -->
-    <% for (let item of guides) { %> <%- include('../components/renderGuide', {guide: item}); %> <% } %>
-    <!--  -->
+    <footer></footer>
     <% if (typeof libs !== 'undefined') { %> <% for (let lib of libs) { %>
     <script src="/libs/<%= lib %>.js" type="text/javascript"></script>
     <% } } %>
 
     <script>
-      const countySearchbar = document.querySelectorAll(".county_autocomplete");
-      const citySearchbar = document.querySelectorAll(".city_autocomplete");
+      window.onload = function () {
+        const countySearchbar = document.querySelectorAll(".county_autocomplete");
+        const citySearchbar = document.querySelectorAll(".city_autocomplete");
+        SearchbarsForeach(countySearchbar, "counties");
+        SearchbarsForeach(citySearchbar, "cities");
 
-      SearchbarsForeach(countySearchbar, "counties");
-      SearchbarsForeach(citySearchbar, "cities");
+        const guidesContainer = document.querySelector(".guides");
+
+        guidesContainer.style.height = `${getAbsoluteHeight(".measure-wd") - getAbsoluteHeight("header") - 2}px`;
+
+        const emailButtons = document.querySelectorAll(".btn--email");
+        let clipboard = new ClipboardJS(emailButtons);
+
+        const burger = document.querySelector(".header__links--mobile");
+        burger.addEventListener("click", () => {
+          document.querySelector(".burger--1").classList.toggle("--active");
+          document.querySelector(".burger--2").classList.toggle("--active");
+          document.querySelector(".burger--3").classList.toggle("--active");
+        });
+
+        const unfoldButtons = document.querySelectorAll(".desc--unfold");
+        unfoldButtons.forEach((button) => {
+          button.addEventListener("click", (e) => {
+            e.target.parentElement.firstElementChild.classList.remove("fold");
+            e.target.style.display = "none";
+          });
+        });
+      };
     </script>
   </body>
 </html>

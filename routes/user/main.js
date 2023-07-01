@@ -4,6 +4,10 @@ import { handleErrors } from "../../tools/middlewares.js";
 
 const router = express.Router();
 
+router.get("/", (req, res) => {
+  res.render("user/homepageTemplate.ejs");
+});
+
 router.get("/search", async (req, res) => {
   const db = dbService.getDbServiceInstance();
   const guidesID = [];
@@ -17,7 +21,7 @@ router.get("/search", async (req, res) => {
     const result = await db.showGuide(id);
     guides.push(result);
   }
-  res.render("user/searchTemplate.ejs", { guides: guides, error: false, libs: ["tools"] });
+  res.render("user/searchTemplate.ejs", { guides: guides, error: false, libs: ["tools", "clipboard.min"] });
 });
 
 router.post("/search", async (req, res) => {
@@ -33,9 +37,9 @@ router.post("/search", async (req, res) => {
   }
   // console.log(guides[0]);
   if (!guides[0]) {
-    res.render("user/searchTemplate.ejs", { guides: guides, error: true, libs: ["tools"] });
+    res.render("user/searchTemplate.ejs", { guides: guides, error: true, libs: ["tools", "clipboard.min"] });
   } else {
-    res.render("user/searchTemplate.ejs", { guides: guides, error: false, libs: ["tools"] });
+    res.render("user/searchTemplate.ejs", { guides: guides, error: false, libs: ["tools", "clipboard.min"] });
   }
 });
 

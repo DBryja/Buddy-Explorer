@@ -1,18 +1,37 @@
 <script src="https://kit.fontawesome.com/44f15dda1a.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/styles/css/style.css" type="text/css" />
 <header>
-  <style>
-    a {
-      color: white;
-    }
-  </style>
-  <div>LOGO</div>
-  <div class="links">
-    ---
-    <a href="http://127.0.0.1:3000/guide/signin">sign in</a> ---
-    <a href="http://127.0.0.1:3000/guide/signup">sign up</a> ---
-    <a href="http://127.0.0.1:3000/guide/profile">guide profile</a> ---
-    <a href="http://127.0.0.1:3000/search">search</a> ---
-
-    <a href="http://127.0.0.1:3000/guide/signout">sign out</a> ---
+  <div class="header">
+    <a href="/" class="header__logo"><img src="/img/logo1.png" alt="" /></a>
+    <div class="header__links header__links--desktop">
+      <a href="/search" class="hover-underline-animation menu_item">
+        <span class="menu_item--text">Szukaj</span
+        ><img src="/img/magnifier.svg" alt="magnifier" class="menu_item--icon" />
+      </a>
+      <a href="/guide/profile" class="hover-underline-animation menu_item">
+        <span class="menu_item--text">Profil</span
+        ><img src="/img/traveller.svg" alt="traveller" class="menu_item--icon" />
+      </a>
+    </div>
+    <div class="header__links header__links--mobile">
+      <div class="burger burger--1"></div>
+      <div class="burger burger--2"></div>
+      <div class="burger burger--3"></div>
+    </div>
   </div>
 </header>
+<div class="menu menu--mobile">
+  <a href="/search" class="menu_item">
+    <span class="menu_item--text">Szukaj</span><img src="/img/magnifier.svg" alt="magnifier" class="menu_item--icon" />
+  </a>
+  <a href="/guide/profile" class="menu_item">
+    <span class="menu_item--text">Profil</span><img src="/img/traveller.svg" alt="traveller" class="menu_item--icon" />
+  </a>
+</div>
+
+<script>
+  document.querySelector(".header__links--mobile").addEventListener("click", () => {
+    document.querySelector(".menu").classList.toggle("active");
+    document.querySelectorAll(".menu_item").forEach((item) => item.classList.toggle("active"));
+  });
+</script>

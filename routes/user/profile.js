@@ -26,16 +26,6 @@ router.get("/guide/signout", async (req, res) => {
   res.redirect("/guide/signin");
 });
 
-// router.post("/guide/profile", updateValidation, handleErrorsProfile, async (req, res) => {
-//   const db = dbService.getDbServiceInstance();
-//   const { nickname, fullname, desc } = req.body;
-//   if (nickname) console.log(nickname);
-//   if (fullname) console.log(fullname);
-//   if (desc) console.log(desc);
-
-//   res.redirect("back");
-// });
-
 router.post(
   "/guide/profile/:type",
   upload.single("profile_pic"),
