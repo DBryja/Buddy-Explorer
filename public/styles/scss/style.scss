@@ -1,0 +1,51 @@
+@import "reset", "variables", "fonts", "mixins", "keyframes";
+@import "buttons", "inputs", "components";
+@import "search", "signin", "signup";
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: $white300;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  justify-items: center;
+  grid-template-rows: fit-content 1fr;
+  grid-template-columns: 1fr;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .--desktop {
+    display: none;
+  }
+
+  @include m {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    .--desktop {
+      display: block;
+    }
+    .--mobile {
+      display: none;
+    }
+  }
+}
+
+.measure-wd {
+  z-index: -1000;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  @include m {
+    height: 100vh;
+    width: 100vw;
+  }
+}

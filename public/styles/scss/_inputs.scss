@@ -1,0 +1,115 @@
+.input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: $green700;
+  padding-left: 1rem;
+
+  &::placeholder {
+    opacity: 0.5;
+    color: $green700;
+  }
+
+  &--lb-title {
+    border-bottom: 1px solid $green500;
+    border-left: 1px solid $green500;
+    font-size: 1.65rem;
+    padding-top: 0.5rem;
+    @include m {
+      font-size: 1.5rem;
+    }
+  }
+  &--underline {
+    border-bottom: 1px solid $white300;
+    font-size: 1.5rem;
+    padding: 10px 0 0 0;
+    color: $white100;
+    &::placeholder {
+      opacity: 0.5;
+      color: $white100;
+    }
+    @include m {
+      border-color: $green700;
+      font-size: 1.3rem;
+      color: $green700;
+      &::placeholder {
+        opacity: 0.5;
+        color: $green700;
+      }
+    }
+  }
+
+  @include m {
+    padding-bottom: 0.3rem;
+  }
+}
+
+.title-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: left;
+  width: 100%;
+  &--title {
+    font-size: 0.9rem;
+    color: $green500;
+  }
+  .input {
+    width: 100%;
+  }
+}
+
+.password_container {
+  width: 100%;
+  display: flex;
+}
+.passwordVis {
+  display: inline-block;
+  width: 3rem;
+  aspect-ratio: 1;
+  background-image: url("/img/eyes_front.svg");
+  // background-image: url("/img/eyes_back.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-bottom: 1px solid #3f825e;
+  cursor: pointer;
+}
+.passwordVis.active {
+  background-image: url("/img/eyes_back.svg");
+}
+
+.trash-icon {
+  display: inline-flex;
+  height: 100%;
+  aspect-ratio: 1;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+
+  * {
+    pointer-events: none;
+  }
+
+  svg {
+    height: 80%;
+  }
+
+  .trashcan-hood {
+    transform-origin: 50%;
+    transition: transform 0.1s linear;
+    transform: rotate(15deg);
+  }
+  @include m {
+    .trashcan-hood {
+      transform: rotate(0deg);
+    }
+    &:hover .trashcan-hood {
+      transform: rotate(15deg);
+    }
+  }
+
+  &:active .trashcan-hood {
+    transform: rotate(0deg) translateY(10%);
+  }
+}

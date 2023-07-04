@@ -1,0 +1,145 @@
+.signup {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(3fr, 80%) auto;
+  width: 90%;
+  margin: 30px 0;
+  @include m {
+    max-width: 1400px;
+    max-height: 600px;
+    column-gap: 50px;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 1fr;
+  }
+  .input {
+    font-size: 2rem;
+  }
+
+  &--form {
+    display: flex;
+    flex-flow: column nowrap;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    //  border: 2px solid black;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    @include scrollbar;
+  }
+
+  &--extras {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    row-gap: 15px;
+    .tracker-container {
+      width: 100%;
+    }
+    @include m {
+      justify-content: space-around;
+      margin-top: 0;
+      padding: 60px 0;
+      div {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+      }
+      .tracker-container svg {
+        width: 90%;
+      }
+      .logo--desktop svg {
+        width: 70%;
+      }
+    }
+  }
+}
+
+.form--step {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  grid-template-rows: min-content 1fr 10%;
+  width: 100%;
+  height: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  padding: 10px;
+  margin: 5px 0;
+  overflow: hidden;
+  border-top: 1px solid $green500;
+  border-bottom: 1px solid $green500;
+  border: 1px solid $green500;
+  border-radius: 5px;
+  h1 {
+    flex-basis: content;
+    &.margin {
+      margin-bottom: 15px;
+    }
+  }
+  button {
+    flex-basis: 10%;
+  }
+  .input {
+    font-size: 2.5rem;
+  }
+  .autocomplete_item {
+    font-size: 2rem;
+  }
+  section,
+  .searchbars {
+    display: grid;
+    grid-template-rows: repeat(auto-fill, min-content);
+    align-content: start;
+    row-gap: 15px;
+  }
+}
+
+svg {
+  overflow: visible !important; //shadows would cut off
+}
+.tracker-container {
+  overflow: visible;
+}
+.tracker {
+  path,
+  circle {
+    filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.8));
+  }
+  &--group {
+    cursor: pointer;
+    transform-origin: center center;
+    transition: all 0.2s ease-in-out;
+    @include mobile-only {
+      &:active {
+        filter: brightness(80%);
+      }
+    }
+    @include m {
+      &:hover {
+        filter: brightness(80%);
+      }
+    }
+  }
+
+  &--circle {
+    transform-origin: center center;
+    transition: stroke-width 0.2s linear, fill 0.2s linear;
+    &.active {
+      stroke-width: 3px;
+    }
+
+    &.empty {
+      fill: $white300;
+    }
+
+    &.filled {
+      fill: #54dc93;
+    }
+  }
+  text {
+    pointer-events: none;
+  }
+}

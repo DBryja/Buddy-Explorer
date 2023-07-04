@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Roboto+Condensed:wght@400;700&display=swap");
+@import "mixins";
+html {
+  font-family: Montserrat;
+  font-size: 10px;
+
+  @include m {
+    font-size: 20px;
+  }
+}
+
+header a {
+  font-size: 1.6rem;
+  color: $white100;
+  text-decoration: none;
+  font-weight: 300;
+}
+
+.name {
+  * {
+    font-weight: 400;
+  }
+  &__nick {
+    color: $black900;
+    font-size: 1.2rem;
+  }
+  &__fullname {
+    color: $green700;
+    font-size: 1rem;
+  }
+  @include m {
+    &__nick {
+      font-size: 1.5rem;
+    }
+    &__fullname {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.data {
+  &__cities {
+    font-size: 1rem;
+    font-weight: 300;
+    color: $green700;
+  }
+}
+
+.desc {
+  font-size: 1rem;
+}
