@@ -30,8 +30,14 @@
 </div>
 
 <script>
-  document.querySelector(".header__links--mobile").addEventListener("click", () => {
+  document.querySelector(".header__links--mobile").addEventListener("touchstart", (e) => {
     document.querySelector(".menu").classList.toggle("active");
     document.querySelectorAll(".menu_item").forEach((item) => item.classList.toggle("active"));
+  });
+  const burger = document.querySelector(".header__links--mobile");
+  burger.addEventListener("touchstart", () => {
+    document.querySelector(".burger--1").classList.toggle("--active");
+    document.querySelector(".burger--2").classList.toggle("--active");
+    document.querySelector(".burger--3").classList.toggle("--active");
   });
 </script>

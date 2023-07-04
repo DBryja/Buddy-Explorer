@@ -22,7 +22,7 @@
       <%})}%>
     </div>
     <!--  -->
-    <%guide.desc = String.raw`${guide.desc.replaceAll("\r\n", "<br />")}` %>
+    <% if(guide.desc) guide.desc = String.raw`${guide.desc.replaceAll("\r\n", "<br />")}` %>
     <div class="wrap">
       <h1>PROFILE</h1>
       <%- include("../components/header"); %><!-- -->

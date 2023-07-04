@@ -65,18 +65,11 @@
         SearchbarsForeach(citySearchbar, "cities");
 
         const guidesContainer = document.querySelector(".guides");
-
-        guidesContainer.style.height = `${getAbsoluteHeight(".measure-wd") - getAbsoluteHeight("header") - 2}px`;
+        const height = getAbsoluteHeight(".measure-wd") - getAbsoluteHeight("header") - 2;
+        guidesContainer.style.height = `${height}px`;
 
         const emailButtons = document.querySelectorAll(".btn--email");
         let clipboard = new ClipboardJS(emailButtons);
-
-        const burger = document.querySelector(".header__links--mobile");
-        burger.addEventListener("click", () => {
-          document.querySelector(".burger--1").classList.toggle("--active");
-          document.querySelector(".burger--2").classList.toggle("--active");
-          document.querySelector(".burger--3").classList.toggle("--active");
-        });
 
         const unfoldButtons = document.querySelectorAll(".desc--unfold");
         unfoldButtons.forEach((button) => {
