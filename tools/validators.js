@@ -23,12 +23,12 @@ const validators = {
   requireNickname: check("nickname")
     .trim()
     .isLength({ min: 5, max: 16 })
-    .withMessage("Must be between 5 and 16 characters")
+    .withMessage("Musi zawierać co najmniej 5 znaków, maksymalnie 16")
     .custom((item) => checkTag(item)),
   requireFullname: check("fullname")
     .trim()
-    .isLength({ min: 3, max: 64 })
-    .withMessage("Musi zawierać conajmniej 3 znaki, maksymalnie 64")
+    .isLength({ min: 2, max: 32 })
+    .withMessage("Musi zawierać co najmniej 2 znaki, maksymalnie 32")
     .optional({ checkFalsy: true })
     .custom((item) => checkTag(item)),
   requireDesc: check("desc")
@@ -38,12 +38,16 @@ const validators = {
     .optional({ checkFalsy: true })
     .custom((item) => checkTag(item)),
 
-  requirePrice: check("price").trim().toFloat().isFloat({ min: 1 }).withMessage("Must be a number greater or equal 1"),
+  requirePrice: check("price")
+    .trim()
+    .toFloat()
+    .isFloat({ min: 1 })
+    .withMessage("Musi być liczbą o wartości co najmniej 1"),
   requireEmail: body("email")
     .trim()
     .normalizeEmail()
     .isEmail()
-    .withMessage("Must be a valid email")
+    .withMessage("Upewnij się, że email jest poprawny")
     .custom(async (email) => {
       const existingUser = await db.getGuideByEmail(email);
       if (existingUser) {
@@ -52,13 +56,13 @@ const validators = {
         return true;
       }
     })
-    .withMessage("This email is in use")
+    .withMessage("Ten email jest już w użytku")
     .custom((item) => checkTag(item)),
 
   requirePassword: check("password")
     .trim()
-    .isLength({ min: 8, max: 32 })
-    .withMessage("Must be between 8 and 32 characters")
+    .isLength({ min: 6, max: 32 })
+    .withMessage("Musi zawierać co najmniej 6 znaków, maksymalnie 32")
     .custom((item) => checkTag(item)),
 
   requireConfirm: check("passwordConfirmation")
@@ -68,6 +72,7 @@ const validators = {
         throw new Error("Passwords must match");
       } else return true;
     })
+    .withMessage("Hasła muszą do siebie pasować")
     .custom((item) => checkTag(item)),
 
   requireCity: check("city")
@@ -89,7 +94,7 @@ const validators = {
         return true;
       }
     })
-    .withMessage("Must provide a valid city")
+    .withMessage("Nie znaleziono jednej z miejscowości")
     .custom((item) => checkTag(item)),
 
   requireCounty: check("county")
@@ -111,7 +116,7 @@ const validators = {
         return true;
       }
     })
-    .withMessage("Must provide a valid county")
+    .withMessage("Nie znaleziono jednego z powiatów")
     .custom((item) => checkTag(item)),
 };
 
