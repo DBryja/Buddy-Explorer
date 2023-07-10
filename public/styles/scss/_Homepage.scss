@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper--signup {
+  position: relative;
+  width: 100%;
+}
+.background {
+  position: absolute;
+  inset: 0;
+}
+.video {
+  width: 100%;
+  z-index: -1;
+}
+.content {
+  position: absolute;
+  z-index: 5;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: start;
+  align-items: center;
+  &--card {
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px);
+    padding: 40px 50px;
+    border-radius: 50px;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  row-gap: 30px;
+  h1 {
+    color: white;
+    font-size: 5rem;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    text-align: center;
+    line-height: 120%;
+    span {
+      text-align: center;
+      color: lighten($green500, 50%);
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
