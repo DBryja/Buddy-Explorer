@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
     <title>Document</title>
     <!-- function to find form post errors  -->
     <% function getError(prop){ try{ const searchIndex = errors.findIndex((item) => item.param == prop);
@@ -74,7 +74,7 @@
         </div>
 
         <div class="form--step form--step--2">
-          <h1>Powiaty</h1>
+          <h1 class="margin">Powiaty</h1>
           <div id="counties_Searchbars" class="searchbars">
             <p class="title-input--title error sb_start"><%= getError("county")%></p>
             <div class="autocomplete_box autocomplete_box--icon">
@@ -108,7 +108,7 @@
         </div>
 
         <div class="form--step form--step--3">
-          <h1>Miejscowości</h1>
+          <h1 class="margin">Miejscowości</h1>
           <div id="cities_Searchbars" class="searchbars">
             <p class="title-input--title error sb_start"><%= getError("city")%></p>
             <div class="autocomplete_box autocomplete_box--icon">
@@ -214,7 +214,8 @@
     <!-- SCRIPTS -->
     <% if (typeof libs !== 'undefined') { %> <% for (let lib of libs) { %>
     <script src="/libs/<%= lib %>.js" type="text/javascript"></script>
-    <% } %> <% } %>
+    <% } } %>
+
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const inputs = [
@@ -273,6 +274,13 @@
             steps[e.target.dataset.number].scrollIntoView({ behavior: "smooth" });
           });
         });
+
+        document.querySelectorAll("button").forEach((button) =>
+          button.addEventListener("click", (e) => {
+            e.preventDefault;
+            return false;
+          })
+        );
 
         //adds listener for each input to update completion tracker
         inputs.forEach((el) => {

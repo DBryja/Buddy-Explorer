@@ -2,112 +2,210 @@
 <script src="/libs/<%= lib %>.js" type="text/javascript"></script>
 <% } } %>
 
-<style>
-  .inline {
-    display: inline;
-  }
-  .change {
-    display: inline;
-    cursor: pointer;
-    color: rgb(3, 3, 83);
-  }
-  .current {
-    color: white;
-  }
-  .popup {
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    height: 60vh;
-    aspect-ratio: 1;
-    background-color: #574040;
-    z-index: 100;
-  }
-  .wrap.active::after {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-  }
-  .hidden {
-    display: none;
-  }
-  .active {
-    display: block;
-  }
-</style>
 <script>
   let guide = JSON.parse(`<%- JSON.stringify(guide) %>`);
-  delete guide.profile_pic;
+  let errors = JSON.parse(`<%- JSON.stringify(errors) %>`);
+
+  function getError(prop) {
+    try {
+      const searchIndex = errors.findIndex((item) => item.param == prop);
+      return errors[searchIndex].msg;
+    } catch (err) {
+      return "&nbsp";
+    }
+  }
 
   const togglePopup = () => {
-    document.querySelector(".popup").classList.toggle("hidden");
-    document.querySelector(".wrap").classList.toggle("active");
+    document.querySelector(".popup").classList.toggle("active");
+    document.querySelector(".measure-wd").classList.toggle("active");
   };
 
   const renderForm = (type, guide) => {
-    let content = "";
+    let content = ``;
     switch (type) {
       case "nickname":
-        content = `
-        <span>Nazwa Użytkownika:<span><input type="text" name="nickname" value="${guide.nickname}"/>
+        content += `
+        <h1>Nazwa użytkownika</h1>
+        <div class="title-input">
+              <span class="title-input--title error">${getError("nickname")}</span>
+              <input
+                type="text"
+                placeholder="nazwa użytkownika"
+                class="nickname input input--lb-title"
+                name="nickname"
+                required
+                value="${guide.nickname}"
+              />
+            </div>
         `;
         break;
       case "fullname":
-        content = `
-        <span>Imię i Nazwisko:<span><input type="text" name="fullname" value="${guide.fullname}"/>
+        content += `<h1>Imię i nazwisko</h1>
+        <div class="flexgap">
+        <div class="title-input">
+              <span class="title-input--title error">${getError("fullname")}</span>
+              <input
+                type="text"
+                placeholder="imię i nazwisko"
+                class="nickname input input--lb-title"
+                name="fullname"
+                required
+                value="${guide.fullname}"
+              />
+            </div>
+          </div>
           `;
         break;
       case "desc":
-        content = `
-        <span>Opis:<span><textarea name="desc">${guide.desc.replaceAll("<br />", "\n")}</textarea>
+        content += `<h1>Opis</h1>
+        <div class="flexgap">
+        <div class="title-input">
+            <span class="title-input--title error">${getError("desc")}</span>
+            <textarea
+              rows="7"
+              type="text"
+              class="input input--lb-title input--profile input--desc current"
+              data-key="desc"
+              name="desc"
+            >
+<% if(guide.desc){%><%=guide.desc%><%}else{%>- - -<%}%></textarea
+            >
+          </div>
+          </div>
         `;
         break;
       case "password":
-        content = `
-        <span>Aktualne hasło:<span><input type="password" name="pswd_current"/>
-        <span>Nowe hasło:<span><input type="password" name="password" id="password" />
-        <span>Potwierdź hasło:<span><input type="password" name="passwordConfirmation" id="passwordConfirmation"/>
+      case "passwordConfirmation":
+      case "pswd_current":
+        content += `<h1>Zmiana hasła</h1>
+        <div class="flexgap">
+        <div class="title-input">
+              <span class="title-input--title error">${getError("pswd_current")}</span>
+              <div class="password_container">
+                <input
+                  type="password"
+                  placeholder="aktualne hasło"
+                  class="password input input--lb-title"
+                  name="pswd_current"
+                  blockid="0"
+                  required
+                />
+                <div class="passwordVis input-icon" blockid="0"></div>
+              </div>
+            </div>
+        <div class="title-input">
+              <span class="title-input--title error">${getError("password")}</span>
+              <div class="password_container">
+                <input
+                  type="password"
+                  placeholder="nowe hasło"
+                  class="password input input--lb-title"
+                  name="password"
+                  blockid="1"
+                  id="password"
+                  required
+                />
+                <div class="passwordVis input-icon" blockid="1"></div>
+              </div>
+            </div>
+            <div class="title-input">
+              <span class="title-input--title error">${getError("passwordConfirmation")}</span>
+              <div class="password_container">
+                <input
+                  type="password"
+                  placeholder="powtórz hasło"
+                  class="password input input--lb-title"
+                  name="passwordConfirmation"
+                  id="passwordConfirmation"
+                  blockid="2"
+                  required
+                />
+                <div class="passwordVis input-icon" blockid="2"></div>
+              </div>
+            </div>
+            </div>
         `;
         break;
       case "county":
-        content = `
-        <div id="counties_Searchbars">
-        <span></span>
+        content += `<h1 class="no-margin">Zarządzanie powiatami</h1>
+        <div id="counties_Searchbars" class="searchbars">
+          <p class="title-input--title error">${getError("county")}</p>
         <% guide.regs.forEach((item) =>{ %>
-            <div class="autocomplete_box">
-              <input type="text" class="county_autocomplete county" placeholder="powiat" name="county" autocomplete="off" value="<%=item%>"></span>
-              <button class="item_delete prevent">Usuń</button>
-              <div class="cities_container"></div>
+          <div class="autocomplete_box autocomplete_box--icon">
+              <input
+                type="text"
+                class="county_autocomplete county input input--lb-title"
+                placeholder="powiat"
+                name="county"
+                autocomplete="off"
+                value="<%=item%>"
+              />
+              <div class="item_delete prevent trash-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    class="trashcan-hood"
+                    d="M9.25 3C9.25 2.80109 9.32902 2.61032 9.46967 2.46967C9.61032 2.32902 9.80109 2.25 10 2.25H14C14.1989 2.25 14.3897 2.32902 14.5303 2.46967C14.671 2.61032 14.75 2.80109 14.75 3V3.75H19C19.1989 3.75 19.3897 3.82902 19.5303 3.96967C19.671 4.11032 19.75 4.30109 19.75 4.5C19.75 4.69891 19.671 4.88968 19.5303 5.03033C19.3897 5.17098 19.1989 5.25 19 5.25H5C4.80109 5.25 4.61032 5.17098 4.46967 5.03033C4.32902 4.88968 4.25 4.69891 4.25 4.5C4.25 4.30109 4.32902 4.11032 4.46967 3.96967C4.61032 3.82902 4.80109 3.75 5 3.75H9.25V3Z"
+                    fill="#3f825e"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M6.24009 7.945C6.25363 7.82266 6.31182 7.70961 6.40353 7.6275C6.49523 7.54539 6.614 7.49999 6.73709 7.5H17.2631C17.3862 7.49999 17.5049 7.54539 17.5967 7.6275C17.6884 7.70961 17.7465 7.82266 17.7601 7.945L17.9601 9.746C18.3211 12.993 18.3211 16.27 17.9601 19.517L17.9401 19.694C17.8761 20.2687 17.6226 20.8058 17.2195 21.2205C16.8165 21.6352 16.2868 21.9038 15.7141 21.984C13.2501 22.3289 10.7501 22.3289 8.28609 21.984C7.71321 21.904 7.1833 21.6355 6.78002 21.2208C6.37675 20.8061 6.12309 20.2689 6.05909 19.694L6.03909 19.517C5.67838 16.2703 5.67838 12.9937 6.03909 9.747L6.24009 7.945ZM10.7501 11.4C10.7501 11.2011 10.6711 11.0103 10.5304 10.8697C10.3898 10.729 10.199 10.65 10.0001 10.65C9.80118 10.65 9.61041 10.729 9.46976 10.8697C9.32911 11.0103 9.25009 11.2011 9.25009 11.4V18.4C9.25009 18.5989 9.32911 18.7897 9.46976 18.9303C9.61041 19.071 9.80118 19.15 10.0001 19.15C10.199 19.15 10.3898 19.071 10.5304 18.9303C10.6711 18.7897 10.7501 18.5989 10.7501 18.4V11.4ZM14.7501 11.4C14.7501 11.2011 14.6711 11.0103 14.5304 10.8697C14.3898 10.729 14.199 10.65 14.0001 10.65C13.8012 10.65 13.6104 10.729 13.4698 10.8697C13.3291 11.0103 13.2501 11.2011 13.2501 11.4V18.4C13.2501 18.5989 13.3291 18.7897 13.4698 18.9303C13.6104 19.071 13.8012 19.15 14.0001 19.15C14.199 19.15 14.3898 19.071 14.5304 18.9303C14.6711 18.7897 14.7501 18.5989 14.7501 18.4V11.4Z"
+                    fill="#3f825e"
+                  />
+                </svg>
+              </div>
+              <div class="counties_container ac_container"></div>
             </div>
         <% }) %>
         </div>
-        <button class="county_add prevent">dodaj powiat</button>
+        <button class="county_add btn btn--green">dodaj powiat</button>
         `;
         break;
       case "city":
-        content = `
-        <div id="cities_Searchbars">
-        <span></span>
+        content += `<h1 class="no-margin">Zarządzanie miejscowościami</h1>
+        <div id="cities_Searchbars" class="searchbars">
+          <p class="title-input--title error sb_start">${getError("city")}</p>
           <% guide.cities.forEach((item) =>{ %>
-            <div class="autocomplete_box">
-              <input type="text" class="city_autocomplete city" placeholder="miasto" name="city" autocomplete="off" value="<%=item%>"">
-              <button class="item_delete prevent">Usuń</button>
-              <div class="counties_container"></div>
+            <div class="autocomplete_box autocomplete_box--icon">
+              <input
+                type="text"
+                class="city_autocomplete city input input--lb-title"
+                placeholder="miejscowość"
+                name="city"
+                autocomplete="off"
+                data-number="2"
+                value="<%=item%>"
+              />
+              <div class="item_delete prevent trash-icon">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    class="trashcan-hood"
+                    d="M9.25 3C9.25 2.80109 9.32902 2.61032 9.46967 2.46967C9.61032 2.32902 9.80109 2.25 10 2.25H14C14.1989 2.25 14.3897 2.32902 14.5303 2.46967C14.671 2.61032 14.75 2.80109 14.75 3V3.75H19C19.1989 3.75 19.3897 3.82902 19.5303 3.96967C19.671 4.11032 19.75 4.30109 19.75 4.5C19.75 4.69891 19.671 4.88968 19.5303 5.03033C19.3897 5.17098 19.1989 5.25 19 5.25H5C4.80109 5.25 4.61032 5.17098 4.46967 5.03033C4.32902 4.88968 4.25 4.69891 4.25 4.5C4.25 4.30109 4.32902 4.11032 4.46967 3.96967C4.61032 3.82902 4.80109 3.75 5 3.75H9.25V3Z"
+                    fill="#3f825e"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M6.24009 7.945C6.25363 7.82266 6.31182 7.70961 6.40353 7.6275C6.49523 7.54539 6.614 7.49999 6.73709 7.5H17.2631C17.3862 7.49999 17.5049 7.54539 17.5967 7.6275C17.6884 7.70961 17.7465 7.82266 17.7601 7.945L17.9601 9.746C18.3211 12.993 18.3211 16.27 17.9601 19.517L17.9401 19.694C17.8761 20.2687 17.6226 20.8058 17.2195 21.2205C16.8165 21.6352 16.2868 21.9038 15.7141 21.984C13.2501 22.3289 10.7501 22.3289 8.28609 21.984C7.71321 21.904 7.1833 21.6355 6.78002 21.2208C6.37675 20.8061 6.12309 20.2689 6.05909 19.694L6.03909 19.517C5.67838 16.2703 5.67838 12.9937 6.03909 9.747L6.24009 7.945ZM10.7501 11.4C10.7501 11.2011 10.6711 11.0103 10.5304 10.8697C10.3898 10.729 10.199 10.65 10.0001 10.65C9.80118 10.65 9.61041 10.729 9.46976 10.8697C9.32911 11.0103 9.25009 11.2011 9.25009 11.4V18.4C9.25009 18.5989 9.32911 18.7897 9.46976 18.9303C9.61041 19.071 9.80118 19.15 10.0001 19.15C10.199 19.15 10.3898 19.071 10.5304 18.9303C10.6711 18.7897 10.7501 18.5989 10.7501 18.4V11.4ZM14.7501 11.4C14.7501 11.2011 14.6711 11.0103 14.5304 10.8697C14.3898 10.729 14.199 10.65 14.0001 10.65C13.8012 10.65 13.6104 10.729 13.4698 10.8697C13.3291 11.0103 13.2501 11.2011 13.2501 11.4V18.4C13.2501 18.5989 13.3291 18.7897 13.4698 18.9303C13.6104 19.071 13.8012 19.15 14.0001 19.15C14.199 19.15 14.3898 19.071 14.5304 18.9303C14.6711 18.7897 14.7501 18.5989 14.7501 18.4V11.4Z"
+                    fill="#3f825e"
+                  />
+                </svg>
+              </div>
+              <div class="cities_container ac_container"></div>
             </div>
         <% }) %>
       </div>
-      <button class="city_add prevent">dodaj miasto</button>
+      <button class="city_add btn btn--green">dodaj miasto</button>
         `;
         break;
       case "profile_pic":
-        content = `
-        <span>Zdjęcie profilowe:</span><input type="file" name="profile_pic" accept=".jpg, .jpeg, .png" required="false" />
-          `;
+        content += `<h1>Zdjęcie profilowe</h1>
+          <label for="images" class="drop-container" id="dropcontainer">
+            <span class="drop-title">Przenieś tutaj</span> lub <span class="drop-title">Naciśnij, aby dodać plik</span>
+        <input type="file" name="profile_pic" accept=".jpg, .jpeg, .png" required="false" id="images" />
+        <span class="--small">dla najlepszego efektu wybierz zdjęcie w skali 1:1</span>
+        `;
         break;
     }
     return content;
@@ -117,10 +215,9 @@
     const inside = document.querySelector(".inside__form");
     // let enctype = "application/x-www-form-urlencoded";
     // if (type === "profile_pic") enctype = """
-    let form = `<form method="POST" enctype="multipart/form-data" action="/guide/profile/${type}">
+    let form = `<form method="POST" id="profile_form" enctype="multipart/form-data" action="/guide/profile/${type}">
     ${renderForm(type, guide)}
     <input type="hidden" name="guide_id" value="${guide.guideId}">
-    <input type="submit" class="submit" value="Zatwierdź zmiany">
     </form>`;
     inside.innerHTML = form;
 
@@ -138,6 +235,39 @@
         SearchbarsForeach(countiesSearchbars, "counties");
       }
       removeItemListener();
+    }
+
+    if (type === "password" || type === "passwordConfirmation" || type === "pswd_current") {
+      document.querySelectorAll(".passwordVis").forEach((el) => {
+        el.addEventListener("click", (e) => showPassword(e));
+      });
+    }
+
+    if (type === "profile_pic") {
+      const dropContainer = document.getElementById("dropcontainer");
+      const fileInput = document.getElementById("images");
+
+      dropContainer.addEventListener(
+        "dragover",
+        (e) => {
+          e.preventDefault();
+        },
+        false
+      );
+
+      dropContainer.addEventListener("dragenter", () => {
+        dropContainer.classList.add("drag-active");
+      });
+
+      dropContainer.addEventListener("dragleave", () => {
+        dropContainer.classList.remove("drag-active");
+      });
+
+      dropContainer.addEventListener("drop", (e) => {
+        e.preventDefault();
+        dropContainer.classList.remove("drag-active");
+        fileInput.files = e.dataTransfer.files;
+      });
     }
   };
 
@@ -161,6 +291,11 @@
     }
   });
   removeItemListener();
+
+  if (errors[0]) {
+    popUpForm(errors[0].param);
+    togglePopup();
+  }
 </script>
 
 <!-- jakis blad przy usuwaniu -->

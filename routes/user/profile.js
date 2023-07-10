@@ -35,28 +35,19 @@ router.post(
     const db = dbService.getDbServiceInstance();
     const errors = [];
 
-    console.log(req.body);
-    console.log(req.file);
-
     const { guide_id: id } = req.body;
     const type = req.params.type;
-
     switch (type) {
       case "nickname":
       case "fullname":
+      case "desc":
         db.updateData(eval("req.body." + type), type, id);
         break;
-      case "desc":
-        const desc = String.raw`${req.body.desc.replaceAll("\r\n", "\\r\\n")}`;
-        db.updateData(desc, type, id);
-        break;
+
       case "password":
-        const { pswd_current, password } = req.body;
-        const currHashed = await db.getPasswordById(id);
-        if (!(await db.comparePassword(pswd_current, currHashed))) {
-          errors.push("Wprowadzono niepoprawne hasło");
-        } else db.updatePassword(id, password);
+        db.updatePassword(id, password);
         break;
+
       case "city":
       case "county":
         const { county, city } = req.body;
@@ -68,10 +59,16 @@ router.post(
         }
         db.updatePlaces(id, type, arr);
         break;
+
       case "profile_pic":
         let image = req.file.buffer.toString("base64");
         db.updateImage(id, image);
         break;
+    }
+
+    if (!errors[0]) {
+      res.redirect("/guide/profile");
+      return;
     }
 
     const guide = await db.showGuide(req.session.guideId);

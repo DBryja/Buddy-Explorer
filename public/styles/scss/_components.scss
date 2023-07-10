@@ -1,7 +1,7 @@
 // header
 @import "mixins";
 header {
-  z-index: 999;
+  z-index: 5;
   background-color: $green500;
   width: 100vw;
   display: flex;
@@ -55,30 +55,17 @@ header {
 
     &__logo {
       cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1.05) rotate(-2deg);
+      }
+    }
+    .eyes-inv {
+      position: absolute !important;
+      height: 0;
+      width: 0;
     }
   }
-  // &__item {
-  //   display: flex;
-  //   white-space: nowrap;
-  //   position: relative;
-  //   margin: 0 15px;
-  //   &::after {
-  //     content: "";
-  //     position: absolute;
-  //     width: 100%;
-  //     transform: scaleX(0);
-  //     height: 2px;
-  //     bottom: 0;
-  //     left: 0;
-  //     background-color: $white100;
-  //     transform-origin: bottom right;
-  //     transition: transform 0.25s ease-out;
-  //   }
-  //   &:hover::after {
-  //     transform: scaleX(1);
-  //     transform-origin: bottom left;
-  //   }
-  // }
 }
 
 .burger {
@@ -190,6 +177,12 @@ header {
 // autocomplete containers
 .searchbars {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  .autocomplete_box {
+    margin-top: 10px;
+  }
 }
 
 .autocomplete_box {
@@ -200,7 +193,7 @@ header {
   &--icon {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 5rem;
+    grid-template-columns: 1fr 4rem;
     grid-template-rows: min-content 1fr;
     * {
       min-width: 0px;
@@ -230,6 +223,9 @@ header {
   max-height: 200px;
   overflow-y: scroll;
   @include scrollbar;
+  @include m {
+    max-height: 300px;
+  }
 }
 .autocomplete_item {
   margin: 2px;

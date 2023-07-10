@@ -279,18 +279,28 @@ export class dbService {
   }
 
   async updateImage(id, image) {
-    let sql = `UPDATE guides_ppic SET profile_pic = "${image}" WHERE guides_ppic.guide_id = '${id}'`;
+    // let sql = `INSERT INTO guides_ppic(guide_id, profile_pic) VALUES ('${id}','[value-3]')`
+    // let sql = `UPDATE guides_ppic SET profile_pic = "${image}" WHERE guides_ppic.guide_id = '${id}'`;
+    let sql = `
+    IF EXISTS (SELECT 1 FROM guides_ppic WHERE guide_id = ${id}) THEN
+      UPDATE guides_ppic 
+      SET profile_pic = "${image}" 
+      WHERE guides_ppic.guide_id = "${id}";
+    ELSE
+      INSERT INTO guides_ppic (guide_id, profile_pic)
+      VALUES ("${id}","${image}");
+    END IF`;
     this.queryHandling(sql);
   }
 
   // OTHERS
   async getCounties(text) {
-    let sql = `SELECT nazwa FROM powiaty WHERE nazwa LIKE '%${text}%' LIMIT 5`;
+    let sql = `SELECT nazwa FROM powiaty WHERE nazwa LIKE '%${text}%' ORDER BY nazwa ASC`;
     const counties = await this.multiResultArray(sql, "nazwa");
     return counties;
   }
   async getCities(text) {
-    let sql = `SELECT nazwa FROM miasta WHERE nazwa LIKE '%${text}%' LIMIT 50`;
+    let sql = `SELECT nazwa FROM miasta WHERE nazwa LIKE '%${text}%' ORDER BY nazwa ASC`;
     const cities = await this.multiResultArray(sql, "nazwa");
     return cities;
   }

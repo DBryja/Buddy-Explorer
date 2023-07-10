@@ -3,70 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      body {
-        background-color: #353535;
-      }
-      .uResult {
-        border: 1px solid black;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
+    <title>Profil</title>
+    <style></style>
   </head>
   <body>
     <!--  -->
-    <div class="errors">
-      <% if(errors) {errors.forEach((err) =>{ %>
-      <p><%=err.msg%></p>
-      <%})}%>
-    </div>
-    <!--  -->
-    <% if(guide.desc) guide.desc = String.raw`${guide.desc.replaceAll("\r\n", "<br />")}` %>
-    <div class="wrap">
-      <h1>PROFILE</h1>
-      <%- include("../components/header"); %><!-- -->
-      <div class="popup hidden" id="unblurred">
-        <div class="inside__form">.</div>
-        <button class="popup__btn">wyjdz</button>
-      </div>
-      <div class="uResult">
-        <div class="uImage">
+    <% if (errors) console.info("profileTemplate:", errors) %> <%- include("../components/header"); %><!-- -->
+
+    <div class="measure-wd"></div>
+    <div class="wrapper--profile wrapper">
+      <div class="profile">
+        <div class="profile__image">
           <%- include('../components/profilePicture', {profile_pic: guide.profile_pic}) %>
-          <button class="change" data-key="profile_pic">Zmień zdjęcie</button>
+          <button class="change btn btn--green" data-key="profile_pic">Zmień zdjęcie</button>
         </div>
 
-        <div class="name__nickname inline">
-          <span>Nazwa użytkownika</span>
-          <span class="current" data-key="nickname"><%= guide.nickname %></span>
-          <span class="change__nickname change" data-key="nickname">Zmień</span>
+        <div class="profile__item profile__buttons">
+          <button class="change btn btn--green" data-key="password">Zmień hasło</button>
+          <button class="change btn btn--green" data-key="county">Zarządzaj powiatami</button>
+          <button class="change btn btn--green" data-key="city">Zarządzaj miejscowościami</button>
         </div>
 
-        <br />
-        <div class="name__fullname inline">
-          <span>Imie i Nazwisko</span>
-          <span class="current" data-key="fullname"
-            ><% if(guide.fullname) { %><%=guide.fullname%><% }else{ %> <i>Imie Nazwisko</i><% } %></span
-          >
-          <span class="change__fullname change" data-key="fullname">Zmień</span>
+        <div class="profile__item profile__input_fields">
+          <div class="name__nickname title-input title-input--wIcon">
+            <span class="title-input--title">Nazwa użytkownika</span>
+            <input
+              type="text"
+              class="input input--lb-title input--profile current"
+              data-key="nickname"
+              placeholder="<%= guide.nickname %>"
+              disabled
+            />
+            <img
+              class="change__nickname pencil_icon input_icon change"
+              data-key="nickname"
+              src="/img/pencil.svg"
+              alt=""
+            />
+          </div>
+
+          <div class="name__fullname title-input title-input--wIcon">
+            <span class="title-input--title">Imię i Nazwisko</span>
+            <input
+              type="text"
+              class="input input--lb-title input--profile current"
+              data-key="fullname"
+              placeholder="<% if(guide.fullname) { %><%=guide.fullname%><% }else{ %>- - -<% } %>"
+              disabled
+            />
+            <img class="change_fullname input_icon change" data-key="fullname" src="/img/pencil.svg" alt="" />
+          </div>
+
+          <div class="profile__desc title-input title-input--wIcon">
+            <span class="title-input--title">Opis</span>
+            <textarea
+              rows="7"
+              type="text"
+              class="input input--lb-title input--profile input--desc current"
+              data-key="desc"
+              disabled
+            >
+<% if(guide.desc){%><%=guide.desc%><%}else{%>- - -<%}%></textarea
+            >
+            <img class="change_desc pencil_icon input_icon change" data-key="desc" src="/img/pencil.svg" alt="" />
+          </div>
         </div>
-
-        <br />
-
-        <div class="uResult__desc inline">
-          <span>Opis</span>
-          <span class="current" data-key="desc"
-            ><% if(guide.desc){%><%-guide.desc%><% } else{ %><i>Opis</i><% } %></span
-          >
-          <span class="change__desc change" data-key="desc">Zmień</span>
-        </div>
-        <br />
-
-        <button class="change" data-key="password">Zmień hasło</button>
-        <button class="change" data-key="county">Dodaj/Usuń powiat</button>
-        <button class="change" data-key="city">Dodaj/Usuń miejscowość</button>
+        <button class="btn btn--red btn--signin profile__logout"><a href="/guide/signout">wyloguj</a></button>
+        <img class="profile__map" src="/img/profile_map.svg" alt="" />
       </div>
-      <%- include("../components/renderProfile", {guide: guide}); %>
     </div>
+
+    <div class="popup window window--signin" id="unblurred">
+      <div class="inside__form"></div>
+      <div class="buttons">
+        <input type="submit" class="submit btn btn--green" value="Zatwierdź zmiany" form="profile_form" />
+        <button class="popup__btn btn btn--red">anuluj</button>
+      </div>
+    </div>
+
+    <!--  -->
+    <% if(guide.desc) guide.desc = guide.desc.replaceAll("\r\n", "\\r\\n"); %>
+    <!--  -->
+    <%- include("../components/renderProfile", {guide: guide, errors: errors}); %>
+    <script>
+      const height = getAbsoluteHeight(".measure-wd") - getAbsoluteHeight("header") - 30;
+      document.querySelector(".wrapper--profile").style.height = `${height}px`;
+    </script>
   </body>
 </html>

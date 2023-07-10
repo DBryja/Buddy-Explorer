@@ -54,6 +54,8 @@
       aspect-ratio: 1;
       border: 1px solid $black900;
       border-radius: 10px;
+      background-color: $white100;
+      image-rendering: auto;
     }
     @include m {
       width: 150px;
@@ -97,6 +99,7 @@
       }
 
       .desc--unfold {
+        margin-top: 3px;
         font-size: 0.8rem;
         padding: 5px 10px;
       }

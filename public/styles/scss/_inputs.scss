@@ -15,8 +15,14 @@
     border-left: 1px solid $green500;
     font-size: 1.65rem;
     padding-top: 0.5rem;
+    padding-bottom: 0.3rem;
     @include m {
       font-size: 1.5rem;
+    }
+  }
+  &--profile {
+    &::placeholder {
+      opacity: 1;
     }
   }
   &--underline {
@@ -45,30 +51,62 @@
 }
 
 .title-input {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: left;
+  display: grid;
+  // flex-direction: row;
+  // align-items: flex-start;
+  // align-content: flex-start;
+  // flex-wrap: wrap;
+  // grid-template-rows: min-content 1fr;
+  // grid-template-columns: 1fr;
+  grid-template-areas:
+    "title title"
+    "input icon";
   width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+
   &--title {
+    grid-area: title;
+    text-align: left;
     font-size: 0.9rem;
     color: $green500;
   }
   .input {
-    width: 100%;
+    grid-area: input;
+  }
+  &--wIcon {
+    row-gap: 0;
+    .input {
+      width: unset;
+      margin-right: 1rem;
+    }
+    .input_icon {
+      grid-area: icon;
+    }
   }
 }
 
 .password_container {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "input icon";
+  .input {
+    grid-area: input;
+  }
+  .passwordVis {
+    grid-area: icon;
+  }
 }
-.passwordVis {
+
+.input_icon {
   display: inline-block;
-  width: 3rem;
   aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.passwordVis {
+  width: 3rem;
   background-image: url("/img/eyes_front.svg");
-  // background-image: url("/img/eyes_back.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -112,4 +150,54 @@
   &:active .trashcan-hood {
     transform: rotate(0deg) translateY(10%);
   }
+}
+
+.drop-container {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 2px dashed #555;
+  color: #444;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+  max-width: 100%;
+  padding: 20px 0;
+}
+
+.drop-container:hover,
+.drop-container.drag-active {
+  background: darken($white300, 5%);
+}
+
+.drop-container {
+  border: 3px dotted $green700;
+}
+
+.drop-title {
+  color: $green700;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  transition: color 0.2s ease-in-out;
+}
+
+input[type="file"] {
+  margin-top: 15px;
+  width: 90%;
+  max-width: 90%;
+  color: $green700;
+  padding: 5px 5px 5px 10px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #555;
+  position: relative;
+  overflow: hidden;
+}
+
+input[type="file"]::file-selector-button {
+  display: none;
 }

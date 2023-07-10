@@ -5,7 +5,7 @@ import { handleErrors } from "../../tools/middlewares.js";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("user/homepageTemplate.ejs");
+  res.render("user/homepageTemplate.ejs", { libs: ["tools"] });
 });
 
 router.get("/search", async (req, res) => {

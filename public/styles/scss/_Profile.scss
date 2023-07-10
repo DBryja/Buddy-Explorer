@@ -1,0 +1,214 @@
+body {
+  overflow: hidden;
+}
+
+.wrapper--profile {
+  margin-top: 30px;
+  width: 90%;
+  @include m {
+    margin-top: 0;
+  }
+}
+
+.profile {
+  width: 100%;
+  height: 80%;
+  display: grid;
+  grid-template-areas:
+    "image buttons"
+    "inputs inputs";
+  grid-template-rows: min-content 1fr;
+  grid-template-columns: 40% 1fr;
+  row-gap: 20px;
+
+  @include m {
+    height: 90%;
+    margin: 0 auto;
+    // max-width: 50vw;
+    max-width: 1000px;
+    grid-template-areas:
+      "image inputs"
+      "image buttons";
+    grid-template-columns: 1fr 1fr;
+    align-content: left;
+    align-items: start;
+    justify-content: center;
+  }
+
+  &__item {
+    width: 100%;
+    display: grid;
+    grid-template-rows: repeat(auto-fill, min-content);
+    //  align-items: center;
+    justify-content: left;
+  }
+  &__image {
+    grid-area: image;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: left;
+    width: 100%;
+    justify-content: end;
+    .uResult__image {
+      width: 80%;
+      margin: 0;
+      img {
+        height: unset;
+        width: 100%;
+        object-position: center;
+        object-fit: fill;
+      }
+      @include m {
+        width: 60%;
+      }
+    }
+    .btn {
+      width: 80%;
+      @include m {
+        width: 50%;
+        margin-right: 5%;
+      }
+    }
+    @include m {
+      height: 100%;
+      border-right: 2px solid $green500;
+      justify-content: start;
+      align-items: end;
+      padding-right: 4rem;
+    }
+  }
+  &__buttons {
+    grid-area: buttons;
+    padding-left: 10px;
+    border-left: 2px solid $green500;
+    justify-content: left;
+    align-content: bottom;
+    row-gap: 20px;
+    button {
+      width: fit-content;
+    }
+    @include m {
+      border-left: 0;
+      padding-left: 4rem;
+    }
+  }
+  &__input_fields {
+    grid-area: inputs;
+    align-content: start;
+    row-gap: 15px;
+    grid-template-columns: minmax(0, 450px);
+    @include mobile-only {
+      .input--lb-title {
+        font-size: 2rem;
+      }
+      .input--desc {
+        font-size: 1.5rem;
+        background-color: $white300;
+      }
+    }
+
+    @include m {
+      border-left: 0;
+      padding-left: 4rem;
+      .input--desc {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  &__logout {
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+  }
+  &__map {
+    position: absolute;
+    z-index: -5;
+    left: -2%;
+    bottom: -2%;
+    @include m {
+      left: 17%;
+      bottom: 24%;
+      scale: 2.5;
+    }
+  }
+}
+
+.popup {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background-color: $white300;
+  box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.2);
+
+  height: 60vh;
+  display: none;
+  &.active {
+    display: block;
+    z-index: 999;
+  }
+}
+.measure-wd.active {
+  z-index: 6;
+  display: block;
+  content: "";
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(98, 98, 98, 0.21);
+  backdrop-filter: blur(6.5px);
+}
+
+.inside__form {
+  width: 100%;
+  form {
+    width: 100%;
+    display: block;
+  }
+  h1 {
+    margin-bottom: 15px;
+  }
+  .flexgap {
+    display: grid;
+    align-content: center;
+    justify-content: left;
+    grid-template-rows: repeat(auto-fill, min-content);
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .password_container {
+    max-width: 100%;
+  }
+
+  .no-margin {
+    margin: 0;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  row-gap: 15px;
+  .submit {
+    scale: 1.2;
+  }
+  @media (max-height: 650px) {
+    flex-direction: row;
+    column-gap: 15px;
+  }
+}
+
+.--small {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+}

@@ -253,3 +253,5 @@ function showPassword(e) {
   else if (passwordField.type === "text") passwordField.type = "password";
   e.target.classList.toggle("active");
 }
+
+// Call the function on page load or any desired event

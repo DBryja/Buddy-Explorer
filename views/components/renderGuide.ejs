@@ -18,7 +18,9 @@
   <% if(guide.desc){%>
   <div class="uResult__desc desc">
     <span class="fold"> <%= guide.desc %> </span>
+    <% if((guide.desc).length > 70){ %>
     <button class="btn desc--unfold --mobile btn--green">rozwiń</button>
+    <%} %>
   </div>
   <%}%>
 </div>

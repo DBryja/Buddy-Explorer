@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
     <title>Document</title>
     <!-- function to find form post errors  -->
     <% function getError(prop){ try{ const searchIndex = errors.findIndex((item) => item.param == prop);
@@ -42,10 +42,9 @@
                 blockID="1"
                 required
               />
-              <div class="passwordVis" blockid="1"></div>
+              <div class="passwordVis input-icon" blockid="1"></div>
             </div>
           </div>
-          <!-- <p class="error"><%= getError("password")%></p> -->
           <button class="btn btn--green btn--signin">zaloguj</button>
           <p>
             <span>Nie masz konta?</span>
@@ -56,13 +55,13 @@
     </div>
 
     <!-- SCRIPTS -->
-    <% if (typeof libs !== 'undefined') { for (let lib of libs) { %>
+    <% if (typeof libs !== 'undefined') { %> <% for (let lib of libs) { %>
     <script src="/libs/<%= lib %>.js" type="text/javascript"></script>
     <% } } %>
     <script>
-      document.querySelectorAll(".passwordVis").forEach(el=>{
+      document.querySelectorAll(".passwordVis").forEach((el) => {
         el.addEventListener("click", (e) => showPassword(e));
-      })
+      });
     </script>
   </body>
 </html>

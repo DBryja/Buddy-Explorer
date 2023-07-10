@@ -118,12 +118,21 @@ const validators = {
     })
     .withMessage("Nie znaleziono jednego z powiatów")
     .custom((item) => checkTag(item)),
+
+  requireMatchCurrentPassword: check("pswd_current")
+    .custom(async (pswd_current, { req }) => {
+      const currHashed = await db.getPasswordById(req.body.id);
+      if (!(await db.comparePassword(pswd_current, currHashed))) {
+        throw new Error("Doesnt match old password");
+      } else return true;
+    })
+    .withMessage("Hasło jest niepoprawne")
+    .custom((item) => checkTag(item)),
 };
 
 export const guideValidation = [
   validators.requireEmail,
   validators.requireNickname,
-  // validators.requirePrice,
   validators.requirePassword,
   validators.requireConfirm,
   validators.requireCounty,
@@ -136,6 +145,7 @@ export const updateValidation = [
   validators.requireDesc.optional({ checkFalsy: true }),
   validators.requirePassword.optional({ checkFalsy: true }),
   validators.requireConfirm.optional({ checkFalsy: true }),
+  validators.requireMatchCurrentPassword.optional({ checkFalsy: true }),
 ];
 
 export const {
