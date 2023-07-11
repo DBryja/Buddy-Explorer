@@ -24,6 +24,17 @@ router.post("/admin", async (req, res) => {
     res.render("admin/signInTemplate", { data: { error: "Zły email bądź hasło" } });
     return;
   }
+
+  // try {
+  //   const result = await db.query(sql);
+  //   const data = JSON.parse(JSON.stringify(result));
+  //   console.log(data);
+  //   req.session.admin_id = data[0].admin_id;
+  //   res.redirect("/admin/panel");
+  // } catch (err) {
+  //   res.render("admin/signInTemplate", { data: { error: "Zły email bądź hasło" } });
+  //   return;
+  // }
 });
 
 // admin panel
