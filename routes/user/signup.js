@@ -33,14 +33,4 @@ router.post("/guide/signup", upload.single("profile_pic"), guideValidation, hand
   }
 });
 
-router.get("/testdelete", async (req, res) => {
-  const db = dbService.getDbServiceInstance();
-  await db.deleteGuide("test@test.com");
-  res.sendStatus(200);
-});
-
-router.get("/test", (req, res) => {
-  res.render("user/test.ejs");
-});
-
 export const guideSignUpRouter = router;

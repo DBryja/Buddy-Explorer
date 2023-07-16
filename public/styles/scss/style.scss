@@ -1,6 +1,6 @@
 @import "reset", "variables", "fonts", "mixins", "keyframes";
 @import "buttons", "inputs", "components";
-@import "search", "signin", "signup", "profile", "homepage";
+@import "search", "signin", "signup", "profile", "homepage", "loadingscreen";
 
 * {
   box-sizing: border-box;
@@ -44,8 +44,8 @@ body {
   }
 }
 
-.measure-wd {
-  z-index: -1000;
+.measure-wd,
+.loading-screen {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -53,6 +53,15 @@ body {
   @include m {
     height: 100vh;
     width: 100vw;
+  }
+}
+
+.index {
+  &--underAll {
+    z-index: -100;
+  }
+  &--aboveAll {
+    z-index: 100;
   }
 }
 
