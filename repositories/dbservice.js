@@ -121,8 +121,8 @@ export class dbService {
     this.queryHandling(sql6);
   }
   // DELETE GUIDE
-  async deleteGuide(email) {
-    const id = await this.getGuideByEmail(email);
+  async deleteGuide(id) {
+    // const id = await this.getGuideByEmail(email);
     let sql = `
     DELETE guides_cities, guides_regions, guides_data, guides_ppic, guides_languages FROM guides 
     LEFT JOIN guides_cities ON (guides_cities.guide_id = guides.guide_id) AND guides_cities.guide_id = "${id}"

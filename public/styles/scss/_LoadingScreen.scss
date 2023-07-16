@@ -1,0 +1,74 @@
+.loading-screen {
+  display: none;
+  &.active {
+    display: flex;
+  }
+  background-color: $green500;
+  justify-content: center;
+  align-items: center;
+  .container {
+    width: 80vw;
+    @include m {
+      width: unset;
+    }
+    img {
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+    p {
+      margin-top: 20px;
+      box-shadow: 0px 0px 30px rgb(255, 248, 224);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .btn:hover > .dots::after {
+      background-color: #f2f2f2;
+    }
+    .dots {
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 122%;
+        background-color: $white100;
+        top: 0;
+        right: 0;
+        animation: dots 1.5s steps(4, end) infinite alternate-reverse;
+        animation-delay: 0.5s;
+        transition: background-color 0.2s ease-out;
+      }
+    }
+
+    &--svg {
+      width: 100%;
+      @include m {
+        width: unset;
+        height: 50vh;
+      }
+      aspect-ratio: 1;
+      border-radius: 50px;
+      overflow: hidden;
+      border: 2px solid $white300;
+      box-shadow: 0px 0px 30px rgb(255, 248, 224);
+      svg {
+        width: 100%;
+        height: 100%;
+        fill: white;
+      }
+    }
+  }
+}
+
+@keyframes dots {
+  0% {
+    width: 122%;
+  }
+  100% {
+    width: 0%;
+  }
+}

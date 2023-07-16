@@ -126,6 +126,25 @@
             </div>
         `;
         break;
+      case "delete":
+        content += `<h1>Usuń konto</h1>
+        <h1>Aby usunąć konto wpisz swoje hasło </h1>
+      <div class="title-input">
+              <span class="title-input--title error">${getError("pswd_current")}</span>
+              <div class="password_container">
+                <input
+                  type="password"
+                  placeholder="aktualne hasło"
+                  class="password input input--lb-title"
+                  name="delete"
+                  blockid="0"
+                  required
+                />
+                <div class="passwordVis input-icon" blockid="0"></div>
+              </div>
+            </div>
+      `;
+        break;
       case "county":
         content += `<h1 class="no-margin">Zarządzanie powiatami</h1>
         <div id="counties_Searchbars" class="searchbars">

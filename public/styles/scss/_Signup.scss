@@ -5,18 +5,26 @@
   grid-template-rows: minmax(3fr, 80%) auto;
   width: 90%;
   margin: 30px 0;
+  max-width: 90vw;
+
   @include m {
-    max-width: 1400px;
     max-height: 600px;
     column-gap: 50px;
     grid-template-columns: 3fr 2fr;
     grid-template-rows: 1fr;
+    margin: 15px 0;
+  }
+  @include l {
+    margin: 30px 0;
   }
   .input {
     font-size: 2rem;
   }
 
   &--form {
+    @include m {
+      max-height: 600px;
+    }
     display: flex;
     flex-flow: column nowrap;
     overflow-x: hidden;
@@ -67,7 +75,7 @@
   flex-shrink: 0;
   scroll-snap-align: start;
   padding: 10px;
-  margin: 5px 0;
+  margin-bottom: 5px;
   overflow: hidden;
   border-top: 1px solid $green500;
   border-bottom: 1px solid $green500;

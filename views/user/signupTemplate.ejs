@@ -10,9 +10,10 @@
     return(errors[searchIndex].msg); } catch(err){ return ""; } } %>
   </head>
   <body>
+    <%- include("../components/loadingScreen"); %><!-- -->
     <%- include("../components/header"); %><!-- -->
-    <div class="measure-wd"></div>
-    <div class="wrapper--signup signup">
+    <div class="measure-wd index--underAll"></div>
+    <div class="wrapper wrapper--signup signup">
       <form id="signup" class="signup--form" method="POST" enctype="multipart/form-data">
         <div class="form--step form--step--1">
           <h1 class="margin">Dane logowania</h1>
@@ -208,6 +209,10 @@
             </g>
           </svg>
         </div>
+        <p class="ask_account">
+          <span>Masz już konto?</span>
+          <a href="/guide/signin">Zaloguj się</a>
+        </p>
       </div>
     </div>
 
@@ -266,6 +271,7 @@
             trackButtons.forEach((b) => b.classList.remove("active"));
             Array.from(trackButtons)[2].classList.add("active");
           }
+          document.body.scrollTop = 0;
         });
 
         const trackButtons = document.querySelectorAll(".tracker--circle");
@@ -291,8 +297,7 @@
           });
         });
 
-        const height = getAbsoluteHeight(".measure-wd") - getAbsoluteHeight("header") - 60;
-        document.querySelector(".wrapper--signup").style.height = `${height}px`;
+        controlWrapperSize(".wrapper--signup", 60);
       });
     </script>
   </body>

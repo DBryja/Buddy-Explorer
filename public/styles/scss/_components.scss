@@ -23,9 +23,6 @@ header {
     align-items: center;
     width: 100%;
     padding: 10px 15px;
-    @include m {
-      padding: 15px 35px;
-    }
 
     &__links--desktop {
       display: none;
@@ -50,7 +47,12 @@ header {
 
     @include m {
       justify-content: space-between;
-      max-width: 1440px;
+      max-width: 1000px;
+      height: 10vh;
+    }
+    @include l {
+      padding: 15px 35px;
+      max-width: 1400px;
     }
 
     &__logo {
@@ -251,10 +253,15 @@ header {
   border-bottom-right-radius: 50px;
   justify-content: center;
   text-align: center;
+  box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.2);
+  border: 2px solid $green700;
   @include m {
     width: unset;
-    height: 50vh;
+    height: 65vh;
     aspect-ratio: 1.3;
+  }
+  @include l {
+    height: 50vh;
   }
 }
 
@@ -263,5 +270,15 @@ header {
   font-size: 1.2rem !important;
   @include m {
     font-size: 1rem !important;
+  }
+}
+
+p.ask_account {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  a {
+    color: $green700;
+    margin-top: 5px;
   }
 }

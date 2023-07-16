@@ -5,6 +5,9 @@ html {
   font-size: 10px;
 
   @include m {
+    font-size: 16px;
+  }
+  @include l {
     font-size: 20px;
   }
 }

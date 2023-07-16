@@ -11,7 +11,9 @@
   </head>
   <body>
     <%- include("../components/header"); %><!-- -->
-    <div class="measure-wd"></div>
+    <%- include("../components/loadingScreen"); %><!-- -->
+
+    <div class="measure-wd index--underAll"></div>
     <div class="wrapper wrapper--signin">
       <div class="window window--signin">
         <span class="window--title"> Zaloguj się </span>
@@ -46,7 +48,7 @@
             </div>
           </div>
           <button class="btn btn--green btn--signin">zaloguj</button>
-          <p>
+          <p class="ask_account">
             <span>Nie masz konta?</span>
             <a href="/guide/signup">Zarejestruj się</a>
           </p>

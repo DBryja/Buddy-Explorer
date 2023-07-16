@@ -7,7 +7,11 @@
     </p>
     <!-- <p class="uResult__regs"><% guide.regs.forEach(item =>{ %> <span class="regs__reg"> <%= item %></span> <% }) %></p> -->
     <p class="data__cities">
-      <% guide.cities.forEach(item =>{ %> <span class="cities__city"> <%= item %></span> <% }) %>
+      <% guide.cities.forEach(item =>{ %>
+      <span class="cities__city"
+        >➲<a href="https://www.google.com/maps/place/<%= item %>/" target="_blank"><%= item %></a>&nbsp;</span
+      >
+      <% }) %>
     </p>
   </div>
   <div class="uResult__contact">

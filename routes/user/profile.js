@@ -64,6 +64,11 @@ router.post(
         let image = req.file.buffer.toString("base64");
         db.updateImage(id, image);
         break;
+
+      case "delete":
+        await db.deleteGuide(req.body.guide_id);
+        res.redirect("/");
+        return;
     }
 
     if (!errors[0]) {

@@ -202,8 +202,8 @@ function autocompleteSearch(type, searchBox, query = "") {
           row.addEventListener("click", (e) => {
             const acBox = e.target.parentElement.previousElementSibling.previousElementSibling;
             acBox.value = e.target.textContent;
-            searchBox.classList.remove("active");
             searchBox.textContent = "";
+            searchBox.classList.remove("active");
           });
         });
       }
@@ -254,4 +254,26 @@ function showPassword(e) {
   e.target.classList.toggle("active");
 }
 
-// Call the function on page load or any desired event
+function resizeWrapper(name, optional) {
+  const height = getAbsoluteHeight(".measure-wd") - getAbsoluteHeight("header") - optional;
+  document.querySelector(name).style.height = `${height}px`;
+}
+function controlWrapperSize(name, optional = 0) {
+  setTimeout(() => {
+    resizeWrapper(name, optional);
+  }, 50);
+  window.addEventListener("resize", () => {
+    resizeWrapper(name, optional);
+  });
+}
+
+document.body.addEventListener("click", function (e) {
+  if (!e.target.classList.contains("autocomplete_item")) {
+    console.log("aaa");
+    let acBoxes = document.querySelectorAll(".ac_container");
+    acBoxes.forEach((el) => {
+      el.textContent = "";
+      el.classList.remove("active");
+    });
+  }
+});

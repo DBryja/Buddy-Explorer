@@ -10,8 +10,9 @@
   <body>
     <!--  -->
     <% if (errors) console.info("profileTemplate:", errors) %> <%- include("../components/header"); %><!-- -->
+    <%- include("../components/loadingScreen"); %><!-- -->
 
-    <div class="measure-wd"></div>
+    <div class="measure-wd index--underAll"></div>
     <div class="wrapper--profile wrapper">
       <div class="profile">
         <div class="profile__image">
@@ -23,6 +24,7 @@
           <button class="change btn btn--green" data-key="password">Zmień hasło</button>
           <button class="change btn btn--green" data-key="county">Zarządzaj powiatami</button>
           <button class="change btn btn--green" data-key="city">Zarządzaj miejscowościami</button>
+          <button class="change btn btn--red" data-key="delete">Usuń konto</button>
         </div>
 
         <div class="profile__item profile__input_fields">
@@ -77,8 +79,8 @@
     <div class="popup window window--signin" id="unblurred">
       <div class="inside__form"></div>
       <div class="buttons">
-        <input type="submit" class="submit btn btn--green" value="Zatwierdź zmiany" form="profile_form" />
         <button class="popup__btn btn btn--red">anuluj</button>
+        <input type="submit" class="submit btn btn--green" value="Zatwierdź zmiany" form="profile_form" />
       </div>
     </div>
 
@@ -87,8 +89,7 @@
     <!--  -->
     <%- include("../components/renderProfile", {guide: guide, errors: errors}); %>
     <script>
-      const height = getAbsoluteHeight(".measure-wd") - getAbsoluteHeight("header") - 30;
-      document.querySelector(".wrapper--profile").style.height = `${height}px`;
+      document.addEventListener("DOMContentLoaded", () => controlWrapperSize(".wrapper--profile", 20));
     </script>
   </body>
 </html>
