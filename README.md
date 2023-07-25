@@ -30,12 +30,11 @@ The website consists of following pages:
 
 ### Built with
 
-HTML5 + EJS,
+HTML5 + **EJS**,
 
-CSS + SASS,
+CSS + **SASS**,
 
-JavaScript:
-
+**JavaScript**:
 - server - NodeJS, ExpressJS
 - Middlewares and Tools:
   - body-parser (parse request bodies),
@@ -47,18 +46,15 @@ JavaScript:
   - dotenv (store data for server),
 - devTools - Nodemon, Livereload(+Connect-Livereload),
 
-Database:
-
+**Database**:
 - SQL + XAMPP & PHPMyAdmin
 
-Design:
-
+**Design**:
 - Figma
 - Adobe Illustrator (home page and loading page illustrations are not made by me, I have made only few adjustements in those)
 - SVG inline styling
 
-Applications used:
-
+**Applications used**:
 - Visual Studio Code,
 - XAMPP, phpMyAdmin,
 - Postman,
@@ -67,14 +63,14 @@ Applications used:
 
 ### Features
 
-- Data validation:
+- **Data validation**:
 
   - All input fields are secured by validators using express-validator middleware
 
-- User registration:
+- **User registration**:
   - a user can register as a guide in an interactive(add or remove input fields) 3 step form, with built in progress tracker
   - after registration the user can log in and update his data, add description and upload own profile picture (all user data including profile pictures is stored directly in the sql database.)
-- Database search:
+- **Database search**:
   - allows all users to search and filter guides by their city and county
   - offers responsive autocomplete name suggestions in city and county input fields
   - database contains a list of polish cities and counties (i used a free to use database, unfortunantly some data in it is incorrect and is not connected city-county, so i had to use 2 seperate lists from which i have excluded repeated names)
@@ -93,13 +89,11 @@ Then I began rewriting ejs templates and styling those.
 
 My project have a lot of space to improve and add new features which I skipped because I wanted to move on from this project.
 Here is a list of things that I would implement if only I had infinite time :^) :
-
 - More user data/search filters: known languages, prefferable price, guide rating + comments, age, gender etc.
 - Admin panel to make it easier to manage users.
 - Built-in communicator to replace currently used email.
 
 Things that I would improve :
-
 - Add client-side validators,
 - Replace current cities/counties database with a proffesional one or with polish government API (https://api.stat.gov.pl/Home/TerytApi),
 
