@@ -24,7 +24,6 @@ body {
   @include m {
     height: 90%;
     margin: 0 auto;
-    // max-width: 50vw;
     max-width: 800px;
     grid-template-areas:
       "image inputs"
@@ -42,7 +41,6 @@ body {
     width: 100%;
     display: grid;
     grid-template-rows: repeat(auto-fill, min-content);
-    //  align-items: center;
     justify-content: left;
   }
   &__image {
@@ -52,7 +50,6 @@ body {
     row-gap: 10px;
     align-items: left;
     width: 100%;
-    // justify-content: end;
     .uResult__image {
       width: 80%;
       margin: 0;
@@ -149,11 +146,11 @@ body {
   display: none;
   &.active {
     display: block;
-    z-index: 999;
+    z-index: 5;
   }
 }
 .measure-wd.active {
-  z-index: 6;
+  z-index: 4;
   display: block;
   content: "";
   position: absolute;

@@ -1,11 +1,3 @@
-html {
-  @include m {
-    font-size: 12px;
-  }
-  @include l {
-    font-size: 20px;
-  }
-}
 body {
   margin: 0;
   padding: 0;

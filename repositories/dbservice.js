@@ -1,6 +1,5 @@
 import mysql from "mysql";
 import dotenv from "dotenv";
-import { response } from "express";
 import bcrypt from "bcryptjs";
 import { intoArray } from "../tools/helpers.js";
 
@@ -247,7 +246,6 @@ export class dbService {
   }
 
   // update data queries
-  // blad przy opisie przez znaki jak enter itp
   async updateData(newData, type, id) {
     let sql = `UPDATE guides_data SET guides_data.${type} = '${newData}' WHERE guides_data.guide_id = '${id}'`;
     this.queryHandling(sql);
@@ -279,8 +277,6 @@ export class dbService {
   }
 
   async updateImage(id, image) {
-    // let sql = `INSERT INTO guides_ppic(guide_id, profile_pic) VALUES ('${id}','[value-3]')`
-    // let sql = `UPDATE guides_ppic SET profile_pic = "${image}" WHERE guides_ppic.guide_id = '${id}'`;
     let sql = `
     IF EXISTS (SELECT 1 FROM guides_ppic WHERE guide_id = ${id}) THEN
       UPDATE guides_ppic 

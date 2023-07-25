@@ -166,12 +166,12 @@ header {
       display: inline-flex;
       align-items: center;
       text-align: center;
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
     &--icon {
       margin-left: 5px;
       display: inline-block;
-      height: 2.2rem;
+      height: 1.7rem;
     }
   }
 }
@@ -224,6 +224,7 @@ header {
 
   max-height: 200px;
   overflow-y: scroll;
+  overflow-x: hidden;
   @include scrollbar;
   @include m {
     max-height: 300px;
@@ -236,7 +237,6 @@ header {
   width: 100%;
   &:hover {
     background-color: darken($white300, 10%);
-    // padding-left: 5px;
   }
 }
 

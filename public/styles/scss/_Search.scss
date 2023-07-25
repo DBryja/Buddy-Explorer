@@ -29,7 +29,6 @@
     row-gap: 15px;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    // padding-right: 15px;
     @include scrollbar;
   }
 }
@@ -77,7 +76,6 @@
         &__fullname::before {
           display: inline;
           content: "▸";
-          // border-left: 2px solid black;
         }
       }
     }

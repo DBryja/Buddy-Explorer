@@ -15,8 +15,6 @@ router.get("/search", async (req, res) => {
   (await db.getAllGuides()).forEach((row) => {
     guidesID.push(row.guide_id);
   });
-  // console.log(guidesID);
-  // console.log(guides);
   for (let id of guidesID) {
     const result = await db.showGuide(id);
     guides.push(result);
@@ -32,10 +30,8 @@ router.post("/search", async (req, res) => {
     guidesID.push(row.guide_id);
   });
   for (let id of guidesID) {
-    // const result = await db.showGuide(id);
     guides.push(await db.showGuide(id));
   }
-  // console.log(guides[0]);
   if (!guides[0]) {
     res.render("user/searchTemplate.ejs", { guides: guides, error: true, libs: ["tools", "clipboard.min"] });
   } else {

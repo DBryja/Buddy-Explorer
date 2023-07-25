@@ -82,12 +82,3 @@ router.post(
 );
 
 export const guideProfileRouter = router;
-
-// UPDATE `guides_data` SET `desc` = 'Bardzo fajny opis' WHERE `guides_data`.`id` = 64
-// UPDATE guides_data SET desc = 'Bardzo fajny i ciekawy opis' WHERE guides_data.guide_id = "86"
-// UPDATE guides_data SET fullname = 'Testowy Test3' WHERE guides_data.guide_id = '86'
-
-// Cześć, jestem Dawid.
-// Od kilku lat jestem lokalnym przewodnikiem.
-// Poza zwiedzaniem uwielbiam folklor.
-// Chętnie Cię oprowadzę i opowiem o moich okolicach :)

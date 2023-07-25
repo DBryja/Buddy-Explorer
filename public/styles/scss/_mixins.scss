@@ -41,6 +41,9 @@
   }
 
   @include m {
+    &::-webkit-scrollbar {
+      display: block;
+    }
     scrollbar-width: thin;
     scrollbar-color: $green500 $white300;
 

@@ -28,7 +28,7 @@
   &--underline {
     border-bottom: 1px solid $white300;
     font-size: 1.5rem;
-    padding: 10px 0 0 0;
+    padding: 10px 0 0 5px;
     color: $white100;
     &::placeholder {
       opacity: 0.5;
@@ -52,12 +52,6 @@
 
 .title-input {
   display: grid;
-  // flex-direction: row;
-  // align-items: flex-start;
-  // align-content: flex-start;
-  // flex-wrap: wrap;
-  // grid-template-rows: min-content 1fr;
-  // grid-template-columns: 1fr;
   grid-template-areas:
     "title title"
     "input icon";

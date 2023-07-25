@@ -28,7 +28,6 @@ router.post("/guide/signup", upload.single("profile_pic"), guideValidation, hand
       profile_pic = false;
     }
     await db.createGuide(email, password, nickname, county, city, profile_pic, fullname);
-    // req.session.guideId = await db.getGuideByEmail(email);
     res.redirect("/guide/profile");
   }
 });
