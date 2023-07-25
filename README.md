@@ -18,25 +18,13 @@ Buddy Explorer is a website created for travelers who like to explore together w
 The registration is open and everybody can sign up as a guide to appear in the search results.
 The website consists of following pages:
 
-#### Home,
-
-![](./readme_files/homepage.png)
-
-#### Search,
-
-![](./readme_files/search.png)
-
-#### Sign-In,
-
-![](./readme_files/signin.png)
-
-#### Sign-Up,
-
-![](./readme_files/signup.png)
-
-#### Profile
-
-![](./readme_files/profile.png)
+|   NAME | PICTURE  |
+| ------------- | ------------- |
+| **Home**  | ![](./readme_files/homepage.png) |
+| **Search**  | ![](./readme_files/search.png)  |
+| **Sign-In**  | ![](./readme_files/signin.png) |
+| **Sign-Up**  | ![](./readme_files/signup.png) |
+| **Profile**  | ![](./readme_files/profile.png) |
 
 ## Technical informations
 
@@ -114,3 +102,7 @@ Things that I would improve :
 
 - Add client-side validators,
 - Replace current cities/counties database with a proffesional one or with polish government API (https://api.stat.gov.pl/Home/TerytApi),
+
+## Author
+- https://github.com/DBryja/
+- https://www.linkedin.com/in/dawid-bryja-898134249/
