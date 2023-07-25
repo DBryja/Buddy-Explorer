@@ -232,8 +232,6 @@
 
   const popUpForm = (type) => {
     const inside = document.querySelector(".inside__form");
-    // let enctype = "application/x-www-form-urlencoded";
-    // if (type === "profile_pic") enctype = """
     let form = `<form method="POST" id="profile_form" enctype="multipart/form-data" action="/guide/profile/${type}">
     ${renderForm(type, guide)}
     <input type="hidden" name="guide_id" value="${guide.guideId}">
@@ -316,5 +314,3 @@
     togglePopup();
   }
 </script>
-
-<!-- jakis blad przy usuwaniu -->
