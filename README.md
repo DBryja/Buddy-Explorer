@@ -28,15 +28,15 @@ The website consists of following pages:
 
 #### Sign-In,
 
-![](./readme_files/homepage.png)
+![](./readme_files/signin.png)
 
 #### Sign-Up,
 
-![](./readme_files/homepage.png)
+![](./readme_files/signup.png)
 
 #### Profile
 
-![](./readme_files/homepage.png)
+![](./readme_files/profile.png)
 
 ## Technical informations
 
