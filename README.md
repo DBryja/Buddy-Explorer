@@ -5,6 +5,7 @@
 - [Technical informations](#technical-informations)
   - [Built with](#built-with)
   - [Features](#features)
+  - [Installation Guide](#installation-guide)
 - [My process](#my-process)
   - [Step By Step](#step-by-step)
   - [Continued development](#continued-development)
@@ -74,6 +75,20 @@ CSS + **SASS**,
   - allows all users to search and filter guides by their city and county
   - offers responsive autocomplete name suggestions in city and county input fields
   - database contains a list of polish cities and counties (i used a free to use database, unfortunantly some data in it is incorrect and is not connected city-county, so i had to use 2 seperate lists from which i have excluded repeated names)
+ 
+### Installation Guide
+
+- Download and unpack the BE_Release.zip
+- Update the .env file
+- Using XAMP:
+  - Create database named "buddy_explorer" and import the buddy_explorer.sql
+  - Create a user with values corresponding to .env file, with all privilages to the buddy_explorer database
+- Open the be_release folder in chosen code editor
+- Run "npm install"
+
+- To launch the application run Apache and SQL on XAMPP and then run "npm run dev" in the terminal
+  - If the installation process was succesfull the console should print messages "listening; db connected;" 
+  - Application is available in the browser at localhost/[.env PORT]
 
 ## My Process
 
