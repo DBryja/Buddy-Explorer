@@ -1,16 +1,7 @@
 // !!!!!!!!!!!!!!
 // the container must be built in the following way:
-/* 
+/*
 <div id="cities_Searchbars">  -> big container
-  <p class="error sb_start"></p> -> first element, it can be an empty span, but it must exist
-    <div class="autocomplete_box"> -> input container. Holding input field, delete button and suggestions container
-        <input type="text" class="city_autocomplete city" placeholder="city" name="city" autocomplete="off">
-        <button class="item_delete prevent">Usuń</button> -> free of choice element, may be a div, button or anything else
-        <div class="cities_container"></div>  ->
-    </div>
-</div> 
-*/
-/* <div id="cities_Searchbars">  -> big container
   <p class="error sb_start"></p> -> first element, it can be an empty span, but it must exist
   <div class="autocomplete_box"> -> input container. Holding input field, delete button and suggestions container
     <div>
@@ -19,7 +10,8 @@
     </div>
     <div class="cities_container"></div>  ->
   </div>
-</div>  */
+</div>  
+*/
 
 // !!!!!!!!!!!!!!
 const updateTracker = (input) => {
@@ -209,6 +201,7 @@ function autocompleteSearch(type, searchBox, query = "") {
       }
     });
 }
+
 function SearchbarsForeach(group, type) {
   let countdown;
   const runSearch = (e) => {
