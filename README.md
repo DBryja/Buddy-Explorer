@@ -83,9 +83,8 @@ CSS + **SASS**,
 - Using XAMP:
   - Create database named "buddy_explorer" and import the buddy_explorer.sql
   - Create a user with values corresponding to .env file, with all privilages to the buddy_explorer database
-- Open the be_release folder in chosen code editor
+- Open the buddy_explorer folder in chosen code editor
 - Run "npm install"
-
 - To launch the application run Apache and SQL on XAMPP and then run "npm run dev" in the terminal
   - If the installation process was succesfull the console should print messages "listening; db connected;" 
   - Application is available in the browser at localhost/[.env PORT]
