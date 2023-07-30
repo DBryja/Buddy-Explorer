@@ -96,6 +96,49 @@ Here is a list of things that I would implement if only I had infinite time :^) 
 Things that I would improve :
 - Add client-side validators,
 - Replace current cities/counties database with a proffesional one or with polish government API (https://api.stat.gov.pl/Home/TerytApi),
+- Rework autocomplete to be based on data-key attributes so the autocomplete elements can be more independent as they now require strict construction:
+  ```html
+  <div id="cities_Searchbars"> -> big container
+    <p class="error sb_start"></p> -> first element, it can be an empty span, but it must exist
+    <div class="autocomplete_box"> -> input container. Holding input field, delete button and suggestions container
+      <div>
+        <input type="text" class="city_autocomplete city" placeholder="city" name="city" autocomplete="off" />
+        <button class="item_delete prevent">Usuń</button> -> free of choice element, may be a div, button or anything
+        else
+      </div>
+      <div class="cities_container"></div> -> container storing suggested items
+    </div>
+  </div>
+  ```
+  ```js
+  function autocompleteSearch(type, searchBox, query = "") {
+  fetch(`/get_${type}?${type}=${query}`)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (responseData) {
+      if (responseData.length > 0) {
+        let arr = [];
+        responseData.forEach((item) => {
+          arr.push(item);
+        });
+        arr = [...new Set(arr)];
+        searchBox.textContent = "";
+        arr.forEach((item) => {
+          const row = document.createElement("p");
+          row.classList.add("autocomplete_item");
+          row.textContent = item;
+          searchBox.appendChild(row);
+          row.addEventListener("click", (e) => {
+            const acBox = e.target.parentElement.previousElementSibling.previousElementSibling;
+            acBox.value = e.target.textContent;
+            searchBox.textContent = "";
+            searchBox.classList.remove("active");
+          });
+        });
+      }
+    });
+  }
 
 ## Author
 - https://github.com/DBryja/
