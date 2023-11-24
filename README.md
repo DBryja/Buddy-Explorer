@@ -120,7 +120,7 @@ Then I began rewriting ejs templates and styling those.
 
 My project have a lot of space to improve and add new features which I skipped because I wanted to move on from this project.
 Here is a list of things that I would implement if only I had infinite time :^) :
-
+- First of all, prevent SQL injections using some library, for some reason I didn't think of it while developing o_O
 - More user data/search filters: known languages, prefferable price, guide rating + comments, age, gender etc.
 - Admin panel to make it easier to manage users.
 - Built-in communicator to replace currently used email.
